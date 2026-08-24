@@ -1,17 +1,17 @@
 {
   "name": "three_day_absence",
-  "description": "C\u00e1tia becomes unavailable for three consecutive days.",
+  "description": "Ana Catarina becomes unavailable for three consecutive days.",
   "unavailable": [
     [
-      "C\u00e1tia",
+      "Ana Catarina",
       "2026-09-15"
     ],
     [
-      "C\u00e1tia",
+      "Ana Catarina",
       "2026-09-16"
     ],
     [
-      "C\u00e1tia",
+      "Ana Catarina",
       "2026-09-17"
     ]
   ],

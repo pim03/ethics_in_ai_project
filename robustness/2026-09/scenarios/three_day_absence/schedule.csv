@@ -1,285 +1,348 @@
 date,weekday,person,shift,start_hour,end_hour
+2026-09-01,Tuesday,Ana Catarina,N,0,8
 2026-09-01,Tuesday,Ana Margarida,A,16,0
-2026-09-01,Tuesday,Cátia,A,16,0
-2026-09-01,Tuesday,Diogo João,EA,14,22
-2026-09-01,Tuesday,Pedro,N,0,8
-2026-09-02,Wednesday,Ana Catarina,M,8,16
-2026-09-02,Wednesday,Ana Filipa,A,16,0
+2026-09-01,Tuesday,Celia L,M,8,16
+2026-09-01,Tuesday,Celso,M,8,16
+2026-09-01,Tuesday,Diogo João,M,8,16
+2026-09-01,Tuesday,Fernanda,A,16,0
+2026-09-01,Tuesday,Hugo,M,8,16
+2026-09-01,Tuesday,Lina,M,8,16
+2026-09-01,Tuesday,Pedro,M,8,16
+2026-09-01,Tuesday,Raquel M,M,8,16
+2026-09-01,Tuesday,Richard,M,8,16
+2026-09-01,Tuesday,Rosa R,M,8,16
+2026-09-01,Tuesday,Telmo,EA,14,22
 2026-09-02,Wednesday,Ana Margarida,EA,14,22
+2026-09-02,Wednesday,Ana Martins,M,8,16
 2026-09-02,Wednesday,Celia L,M,8,16
 2026-09-02,Wednesday,Celso,M,8,16
-2026-09-02,Wednesday,Cátia,A,16,0
 2026-09-02,Wednesday,Diogo João,M,8,16
-2026-09-02,Wednesday,Fernanda,M,8,16
-2026-09-02,Wednesday,Hugo,M,8,16
+2026-09-02,Wednesday,Fernanda,A,16,0
+2026-09-02,Wednesday,Hugo,A,16,0
+2026-09-02,Wednesday,Leonardo,M,8,16
+2026-09-02,Wednesday,Pedro,N,0,8
 2026-09-02,Wednesday,Raquel M,M,8,16
 2026-09-02,Wednesday,Richard,M,8,16
-2026-09-02,Wednesday,Rosa R,N,0,8
+2026-09-02,Wednesday,Rosa R,M,8,16
 2026-09-02,Wednesday,Sandra,M,8,16
 2026-09-02,Wednesday,Telmo,M,8,16
 2026-09-03,Thursday,Ana Margarida,M,8,16
+2026-09-03,Thursday,Ana Martins,M,8,16
+2026-09-03,Thursday,Celia L,M,8,16
 2026-09-03,Thursday,Celso,M,8,16
-2026-09-03,Thursday,Diogo João,EA,14,22
-2026-09-03,Thursday,Fernanda,A,16,0
-2026-09-03,Thursday,Hugo,M,8,16
+2026-09-03,Thursday,Diogo João,M,8,16
+2026-09-03,Thursday,Hugo,EA,14,22
+2026-09-03,Thursday,Leonardo,A,16,0
+2026-09-03,Thursday,Lina,M,8,16
 2026-09-03,Thursday,Raquel M,N,0,8
 2026-09-03,Thursday,Richard,M,8,16
-2026-09-03,Thursday,Telmo,A,16,0
+2026-09-03,Thursday,Rosa R,A,16,0
+2026-09-03,Thursday,Sandra,M,8,16
+2026-09-03,Thursday,Telmo,M,8,16
 2026-09-04,Friday,Ana Catarina,M,8,16
-2026-09-04,Friday,Ana Filipa,M,8,16
 2026-09-04,Friday,Ana Margarida,N,0,8
+2026-09-04,Friday,Ana Martins,A,16,0
 2026-09-04,Friday,Celia L,M,8,16
-2026-09-04,Friday,Celso,A,16,0
-2026-09-04,Friday,Cátia,M,8,16
 2026-09-04,Friday,Diogo João,M,8,16
-2026-09-04,Friday,Fernanda,A,16,0
+2026-09-04,Friday,Fernanda,M,8,16
 2026-09-04,Friday,Hugo,M,8,16
-2026-09-04,Friday,Leonardo,M,8,16
+2026-09-04,Friday,Leonardo,EA,14,22
+2026-09-04,Friday,Lina,M,8,16
 2026-09-04,Friday,Pedro,M,8,16
 2026-09-04,Friday,Richard,M,8,16
+2026-09-04,Friday,Rosa R,A,16,0
 2026-09-04,Friday,Sandra,M,8,16
-2026-09-04,Friday,Telmo,EA,14,22
-2026-09-05,Saturday,Ana Catarina,A,16,0
-2026-09-05,Saturday,Ana Filipa,N,0,8
-2026-09-05,Saturday,Celia L,M,8,16
-2026-09-05,Saturday,Cátia,M,8,16
+2026-09-04,Friday,Telmo,M,8,16
+2026-09-05,Saturday,Ana Catarina,M,8,16
+2026-09-05,Saturday,Fernanda,M,8,16
+2026-09-05,Saturday,Hugo,N,0,8
+2026-09-05,Saturday,Leonardo,M,8,16
 2026-09-05,Saturday,Lina,A,16,0
 2026-09-05,Saturday,Pedro,M,8,16
-2026-09-05,Saturday,Sandra,M,8,16
-2026-09-06,Sunday,Ana Catarina,A,16,0
-2026-09-06,Sunday,Celia L,M,8,16
-2026-09-06,Sunday,Cátia,A,16,0
-2026-09-06,Sunday,Lina,N,0,8
+2026-09-05,Saturday,Richard,A,16,0
+2026-09-05,Saturday,Sandra,A,16,0
+2026-09-06,Sunday,Ana Catarina,M,8,16
+2026-09-06,Sunday,Ana Martins,M,8,16
+2026-09-06,Sunday,Fernanda,M,8,16
+2026-09-06,Sunday,Leonardo,N,0,8
+2026-09-06,Sunday,Lina,A,16,0
 2026-09-06,Sunday,Pedro,M,8,16
-2026-09-06,Sunday,Raquel M,M,8,16
-2026-09-06,Sunday,Sandra,M,8,16
-2026-09-07,Monday,Ana Catarina,N,0,8
+2026-09-06,Sunday,Raquel M,A,16,0
+2026-09-06,Sunday,Telmo,A,16,0
+2026-09-07,Monday,Ana Catarina,M,8,16
+2026-09-07,Monday,Ana Martins,M,8,16
 2026-09-07,Monday,Celia L,M,8,16
-2026-09-07,Monday,Celso,EA,14,22
+2026-09-07,Monday,Celso,M,8,16
 2026-09-07,Monday,Cristina,M,8,16
-2026-09-07,Monday,Cátia,A,16,0
 2026-09-07,Monday,Fernanda,M,8,16
 2026-09-07,Monday,Hugo,M,8,16
-2026-09-07,Monday,Leonardo,M,8,16
+2026-09-07,Monday,Lina,N,0,8
 2026-09-07,Monday,Pedro,M,8,16
-2026-09-07,Monday,Raquel M,M,8,16
-2026-09-07,Monday,Richard,M,8,16
-2026-09-07,Monday,Rosa R,A,16,0
+2026-09-07,Monday,Raquel M,A,16,0
+2026-09-07,Monday,Richard,A,16,0
+2026-09-07,Monday,Rosa R,M,8,16
 2026-09-07,Monday,Sandra,M,8,16
-2026-09-07,Monday,Telmo,M,8,16
+2026-09-07,Monday,Telmo,EA,14,22
+2026-09-08,Tuesday,Ana Catarina,A,16,0
+2026-09-08,Tuesday,Celia L,M,8,16
+2026-09-08,Tuesday,Celso,M,8,16
+2026-09-08,Tuesday,Cristina,M,8,16
 2026-09-08,Tuesday,Hugo,A,16,0
-2026-09-08,Tuesday,Leonardo,N,0,8
-2026-09-08,Tuesday,Rosa R,EA,14,22
-2026-09-08,Tuesday,Telmo,A,16,0
-2026-09-09,Wednesday,Ana Catarina,M,8,16
-2026-09-09,Wednesday,Ana Filipa,M,8,16
+2026-09-08,Tuesday,Leonardo,M,8,16
+2026-09-08,Tuesday,Richard,EA,14,22
+2026-09-08,Tuesday,Rosa R,N,0,8
+2026-09-08,Tuesday,Sandra,M,8,16
+2026-09-08,Tuesday,Telmo,M,8,16
+2026-09-09,Wednesday,Ana Martins,M,8,16
 2026-09-09,Wednesday,Celia L,M,8,16
 2026-09-09,Wednesday,Celso,M,8,16
 2026-09-09,Wednesday,Cristina,M,8,16
-2026-09-09,Wednesday,Cátia,N,0,8
-2026-09-09,Wednesday,Fernanda,EA,14,22
-2026-09-09,Wednesday,Hugo,A,16,0
-2026-09-09,Wednesday,Lina,M,8,16
+2026-09-09,Wednesday,Fernanda,M,8,16
+2026-09-09,Wednesday,Hugo,EA,14,22
+2026-09-09,Wednesday,Leonardo,M,8,16
+2026-09-09,Wednesday,Lina,A,16,0
 2026-09-09,Wednesday,Pedro,M,8,16
-2026-09-09,Wednesday,Raquel M,M,8,16
-2026-09-09,Wednesday,Rosa R,M,8,16
+2026-09-09,Wednesday,Raquel M,A,16,0
+2026-09-09,Wednesday,Richard,M,8,16
 2026-09-09,Wednesday,Sandra,M,8,16
-2026-09-09,Wednesday,Telmo,A,16,0
-2026-09-10,Thursday,Ana Catarina,A,16,0
-2026-09-10,Thursday,Celso,EA,14,22
-2026-09-10,Thursday,Pedro,A,16,0
-2026-09-10,Thursday,Rosa R,N,0,8
-2026-09-11,Friday,Ana Catarina,EA,14,22
-2026-09-11,Friday,Ana Filipa,M,8,16
+2026-09-09,Wednesday,Telmo,N,0,8
+2026-09-10,Thursday,Ana Martins,M,8,16
+2026-09-10,Thursday,Celia L,M,8,16
+2026-09-10,Thursday,Celso,A,16,0
+2026-09-10,Thursday,Cristina,A,16,0
+2026-09-10,Thursday,Fernanda,M,8,16
+2026-09-10,Thursday,Hugo,M,8,16
+2026-09-10,Thursday,Pedro,M,8,16
+2026-09-10,Thursday,Raquel M,EA,14,22
+2026-09-10,Thursday,Richard,N,0,8
+2026-09-10,Thursday,Sandra,M,8,16
+2026-09-11,Friday,Ana Catarina,M,8,16
+2026-09-11,Friday,Ana Martins,M,8,16
 2026-09-11,Friday,Celia L,M,8,16
-2026-09-11,Friday,Celso,M,8,16
-2026-09-11,Friday,Cristina,M,8,16
-2026-09-11,Friday,Cátia,M,8,16
+2026-09-11,Friday,Celso,A,16,0
+2026-09-11,Friday,Cristina,A,16,0
 2026-09-11,Friday,Fernanda,M,8,16
-2026-09-11,Friday,Hugo,M,8,16
+2026-09-11,Friday,Hugo,N,0,8
 2026-09-11,Friday,Leonardo,M,8,16
-2026-09-11,Friday,Pedro,A,16,0
+2026-09-11,Friday,Lina,M,8,16
+2026-09-11,Friday,Pedro,M,8,16
 2026-09-11,Friday,Raquel M,M,8,16
-2026-09-11,Friday,Richard,A,16,0
+2026-09-11,Friday,Rosa R,EA,14,22
 2026-09-11,Friday,Sandra,M,8,16
-2026-09-11,Friday,Telmo,N,0,8
-2026-09-12,Saturday,Ana Filipa,A,16,0
-2026-09-12,Saturday,Celia L,M,8,16
-2026-09-12,Saturday,Cristina,M,8,16
-2026-09-12,Saturday,Cátia,A,16,0
+2026-09-11,Friday,Telmo,M,8,16
+2026-09-12,Saturday,Ana Catarina,M,8,16
 2026-09-12,Saturday,Fernanda,M,8,16
 2026-09-12,Saturday,Leonardo,M,8,16
+2026-09-12,Saturday,Lina,A,16,0
 2026-09-12,Saturday,Raquel M,N,0,8
-2026-09-13,Sunday,Ana Filipa,N,0,8
-2026-09-13,Sunday,Celia L,M,8,16
-2026-09-13,Sunday,Cristina,A,16,0
-2026-09-13,Sunday,Fernanda,M,8,16
-2026-09-13,Sunday,Leonardo,A,16,0
+2026-09-12,Saturday,Rosa R,M,8,16
+2026-09-12,Saturday,Telmo,A,16,0
+2026-09-13,Sunday,Ana Catarina,A,16,0
+2026-09-13,Sunday,Ana Martins,M,8,16
+2026-09-13,Sunday,Leonardo,M,8,16
+2026-09-13,Sunday,Lina,N,0,8
+2026-09-13,Sunday,Pedro,A,16,0
+2026-09-13,Sunday,Richard,M,8,16
 2026-09-13,Sunday,Rosa R,M,8,16
-2026-09-13,Sunday,Telmo,M,8,16
-2026-09-14,Monday,Ana Catarina,M,8,16
+2026-09-14,Monday,Ana Catarina,A,16,0
+2026-09-14,Monday,Ana Martins,M,8,16
 2026-09-14,Monday,Anabela,M,8,16
 2026-09-14,Monday,Celia L,M,8,16
 2026-09-14,Monday,Celso,M,8,16
-2026-09-14,Monday,Cristina,A,16,0
-2026-09-14,Monday,Cátia,M,8,16
 2026-09-14,Monday,Fernanda,M,8,16
-2026-09-14,Monday,Leonardo,A,16,0
-2026-09-14,Monday,Pedro,M,8,16
-2026-09-14,Monday,Raquel B,N,0,8
+2026-09-14,Monday,Leonardo,M,8,16
+2026-09-14,Monday,Pedro,EA,14,22
+2026-09-14,Monday,Raquel B,A,16,0
+2026-09-14,Monday,Raquel M,M,8,16
 2026-09-14,Monday,Richard,M,8,16
-2026-09-14,Monday,Rosa R,M,8,16
-2026-09-14,Monday,Sandra,EA,14,22
+2026-09-14,Monday,Rosa R,N,0,8
+2026-09-14,Monday,Sandra,M,8,16
 2026-09-14,Monday,Telmo,M,8,16
-2026-09-15,Tuesday,Celso,EA,14,22
-2026-09-15,Tuesday,Cristina,A,16,0
-2026-09-15,Tuesday,Lina,M,8,16
-2026-09-15,Tuesday,Pedro,A,16,0
-2026-09-15,Tuesday,Richard,N,0,8
-2026-09-16,Wednesday,Ana Catarina,M,8,16
-2026-09-16,Wednesday,Ana Filipa,M,8,16
-2026-09-16,Wednesday,Anabela,A,16,0
+2026-09-15,Tuesday,Anabela,N,0,8
+2026-09-15,Tuesday,Celia L,M,8,16
+2026-09-15,Tuesday,Celso,M,8,16
+2026-09-15,Tuesday,Cristina,M,8,16
+2026-09-15,Tuesday,Fernanda,M,8,16
+2026-09-15,Tuesday,Pedro,M,8,16
+2026-09-15,Tuesday,Raquel B,EA,14,22
+2026-09-15,Tuesday,Raquel M,M,8,16
+2026-09-15,Tuesday,Sandra,A,16,0
+2026-09-15,Tuesday,Telmo,A,16,0
+2026-09-16,Wednesday,Ana Martins,M,8,16
+2026-09-16,Wednesday,Celia L,M,8,16
 2026-09-16,Wednesday,Celso,M,8,16
-2026-09-16,Wednesday,Cristina,N,0,8
+2026-09-16,Wednesday,Cristina,M,8,16
 2026-09-16,Wednesday,Fernanda,M,8,16
-2026-09-16,Wednesday,Leonardo,EA,14,22
+2026-09-16,Wednesday,Leonardo,M,8,16
 2026-09-16,Wednesday,Lina,M,8,16
-2026-09-16,Wednesday,Pedro,A,16,0
+2026-09-16,Wednesday,Pedro,N,0,8
 2026-09-16,Wednesday,Raquel B,M,8,16
 2026-09-16,Wednesday,Raquel M,M,8,16
+2026-09-16,Wednesday,Richard,A,16,0
 2026-09-16,Wednesday,Rosa R,M,8,16
-2026-09-16,Wednesday,Sandra,M,8,16
-2026-09-16,Wednesday,Telmo,M,8,16
-2026-09-17,Thursday,Ana Catarina,N,0,8
-2026-09-17,Thursday,Ana Filipa,A,16,0
-2026-09-17,Thursday,Anabela,EA,14,22
-2026-09-17,Thursday,Rosa R,A,16,0
-2026-09-18,Friday,Ana Filipa,A,16,0
+2026-09-16,Wednesday,Sandra,EA,14,22
+2026-09-16,Wednesday,Telmo,A,16,0
+2026-09-17,Thursday,Ana Martins,M,8,16
+2026-09-17,Thursday,Celia L,M,8,16
+2026-09-17,Thursday,Celso,M,8,16
+2026-09-17,Thursday,Fernanda,A,16,0
+2026-09-17,Thursday,Hugo,A,16,0
+2026-09-17,Thursday,Leonardo,M,8,16
+2026-09-17,Thursday,Lina,M,8,16
+2026-09-17,Thursday,Raquel B,N,0,8
+2026-09-17,Thursday,Raquel M,M,8,16
+2026-09-17,Thursday,Richard,EA,14,22
+2026-09-17,Thursday,Rosa R,M,8,16
+2026-09-18,Friday,Ana Catarina,M,8,16
+2026-09-18,Friday,Ana Martins,M,8,16
 2026-09-18,Friday,Anabela,M,8,16
 2026-09-18,Friday,Celia L,M,8,16
-2026-09-18,Friday,Celso,M,8,16
+2026-09-18,Friday,Celso,A,16,0
 2026-09-18,Friday,Cristina,M,8,16
-2026-09-18,Friday,Cátia,M,8,16
-2026-09-18,Friday,Fernanda,A,16,0
+2026-09-18,Friday,Fernanda,EA,14,22
 2026-09-18,Friday,Hugo,N,0,8
 2026-09-18,Friday,Leonardo,M,8,16
 2026-09-18,Friday,Lina,M,8,16
-2026-09-18,Friday,Raquel B,M,8,16
-2026-09-18,Friday,Raquel M,M,8,16
+2026-09-18,Friday,Pedro,M,8,16
+2026-09-18,Friday,Raquel M,A,16,0
 2026-09-18,Friday,Richard,M,8,16
-2026-09-18,Friday,Rosa R,EA,14,22
-2026-09-19,Saturday,Anabela,N,0,8
-2026-09-19,Saturday,Celia L,M,8,16
-2026-09-19,Saturday,Cristina,A,16,0
-2026-09-19,Saturday,Leonardo,M,8,16
+2026-09-18,Friday,Rosa R,M,8,16
+2026-09-19,Saturday,Ana Catarina,M,8,16
+2026-09-19,Saturday,Anabela,M,8,16
+2026-09-19,Saturday,Cristina,M,8,16
 2026-09-19,Saturday,Lina,A,16,0
-2026-09-19,Saturday,Raquel B,M,8,16
-2026-09-19,Saturday,Richard,M,8,16
+2026-09-19,Saturday,Pedro,M,8,16
+2026-09-19,Saturday,Richard,N,0,8
+2026-09-19,Saturday,Rosa R,A,16,0
 2026-09-20,Sunday,Ana Catarina,M,8,16
-2026-09-20,Sunday,Celia L,M,8,16
-2026-09-20,Sunday,Hugo,M,8,16
+2026-09-20,Sunday,Ana Martins,A,16,0
+2026-09-20,Sunday,Anabela,A,16,0
+2026-09-20,Sunday,Cristina,M,8,16
 2026-09-20,Sunday,Leonardo,M,8,16
 2026-09-20,Sunday,Lina,N,0,8
-2026-09-20,Sunday,Raquel B,A,16,0
-2026-09-20,Sunday,Richard,A,16,0
+2026-09-20,Sunday,Raquel B,M,8,16
 2026-09-21,Monday,Ana Catarina,M,8,16
 2026-09-21,Monday,Ana Margarida,M,8,16
-2026-09-21,Monday,Anabela,M,8,16
+2026-09-21,Monday,Ana Martins,EA,14,22
+2026-09-21,Monday,Anabela,N,0,8
 2026-09-21,Monday,Celia L,M,8,16
-2026-09-21,Monday,Diogo João,N,0,8
+2026-09-21,Monday,Cristina,M,8,16
+2026-09-21,Monday,Diogo João,M,8,16
 2026-09-21,Monday,Fernanda,M,8,16
 2026-09-21,Monday,Hugo,M,8,16
 2026-09-21,Monday,Leonardo,M,8,16
-2026-09-21,Monday,Raquel B,EA,14,22
-2026-09-21,Monday,Raquel M,A,16,0
-2026-09-21,Monday,Richard,A,16,0
-2026-09-21,Monday,Rosa R,M,8,16
+2026-09-21,Monday,Raquel B,A,16,0
+2026-09-21,Monday,Raquel M,M,8,16
 2026-09-21,Monday,Sandra,M,8,16
-2026-09-21,Monday,Telmo,M,8,16
-2026-09-22,Tuesday,Ana Margarida,EA,14,22
-2026-09-22,Tuesday,Anabela,A,16,0
-2026-09-22,Tuesday,Fernanda,A,16,0
+2026-09-21,Monday,Telmo,A,16,0
+2026-09-22,Tuesday,Ana Catarina,N,0,8
+2026-09-22,Tuesday,Ana Margarida,A,16,0
+2026-09-22,Tuesday,Celia L,M,8,16
+2026-09-22,Tuesday,Diogo João,A,16,0
+2026-09-22,Tuesday,Fernanda,M,8,16
+2026-09-22,Tuesday,Hugo,M,8,16
+2026-09-22,Tuesday,Leonardo,M,8,16
+2026-09-22,Tuesday,Lina,M,8,16
+2026-09-22,Tuesday,Raquel B,EA,14,22
+2026-09-22,Tuesday,Raquel M,M,8,16
 2026-09-22,Tuesday,Rosa R,M,8,16
+2026-09-22,Tuesday,Sandra,M,8,16
 2026-09-22,Tuesday,Telmo,N,0,8
-2026-09-23,Wednesday,Ana Catarina,M,8,16
-2026-09-23,Wednesday,Ana Filipa,M,8,16
-2026-09-23,Wednesday,Ana Margarida,N,0,8
-2026-09-23,Wednesday,Anabela,EA,14,22
+2026-09-23,Wednesday,Ana Margarida,EA,14,22
+2026-09-23,Wednesday,Anabela,M,8,16
 2026-09-23,Wednesday,Celia L,M,8,16
-2026-09-23,Wednesday,Celso,M,8,16
 2026-09-23,Wednesday,Cristina,M,8,16
-2026-09-23,Wednesday,Diogo João,M,8,16
-2026-09-23,Wednesday,Fernanda,A,16,0
+2026-09-23,Wednesday,Diogo João,N,0,8
+2026-09-23,Wednesday,Fernanda,M,8,16
 2026-09-23,Wednesday,Hugo,M,8,16
-2026-09-23,Wednesday,Leonardo,M,8,16
-2026-09-23,Wednesday,Pedro,M,8,16
-2026-09-23,Wednesday,Raquel B,A,16,0
+2026-09-23,Wednesday,Lina,M,8,16
+2026-09-23,Wednesday,Pedro,A,16,0
+2026-09-23,Wednesday,Raquel B,M,8,16
+2026-09-23,Wednesday,Raquel M,A,16,0
+2026-09-23,Wednesday,Richard,M,8,16
 2026-09-23,Wednesday,Rosa R,M,8,16
-2026-09-24,Thursday,Ana Filipa,M,8,16
+2026-09-23,Wednesday,Sandra,M,8,16
+2026-09-24,Thursday,Ana Catarina,M,8,16
+2026-09-24,Thursday,Ana Margarida,M,8,16
+2026-09-24,Thursday,Ana Martins,M,8,16
 2026-09-24,Thursday,Anabela,M,8,16
-2026-09-24,Thursday,Celso,A,16,0
-2026-09-24,Thursday,Diogo João,M,8,16
+2026-09-24,Thursday,Celso,M,8,16
+2026-09-24,Thursday,Cristina,M,8,16
+2026-09-24,Thursday,Fernanda,M,8,16
 2026-09-24,Thursday,Hugo,A,16,0
-2026-09-24,Thursday,Leonardo,N,0,8
-2026-09-24,Thursday,Raquel B,EA,14,22
-2026-09-25,Friday,Ana Filipa,M,8,16
-2026-09-25,Friday,Ana Margarida,M,8,16
-2026-09-25,Friday,Anabela,N,0,8
-2026-09-25,Friday,Celso,A,16,0
+2026-09-24,Thursday,Lina,M,8,16
+2026-09-24,Thursday,Pedro,EA,14,22
+2026-09-24,Thursday,Raquel B,N,0,8
+2026-09-24,Thursday,Richard,A,16,0
+2026-09-24,Thursday,Rosa R,M,8,16
+2026-09-24,Thursday,Sandra,M,8,16
+2026-09-25,Friday,Ana Catarina,M,8,16
+2026-09-25,Friday,Ana Margarida,N,0,8
+2026-09-25,Friday,Ana Martins,M,8,16
+2026-09-25,Friday,Anabela,M,8,16
+2026-09-25,Friday,Celso,M,8,16
 2026-09-25,Friday,Cristina,M,8,16
-2026-09-25,Friday,Diogo João,M,8,16
 2026-09-25,Friday,Fernanda,A,16,0
-2026-09-25,Friday,Hugo,EA,14,22
+2026-09-25,Friday,Hugo,A,16,0
+2026-09-25,Friday,Leonardo,M,8,16
 2026-09-25,Friday,Pedro,M,8,16
-2026-09-25,Friday,Raquel B,M,8,16
-2026-09-25,Friday,Raquel M,M,8,16
-2026-09-25,Friday,Richard,M,8,16
+2026-09-25,Friday,Richard,EA,14,22
+2026-09-25,Friday,Rosa R,M,8,16
 2026-09-25,Friday,Sandra,M,8,16
 2026-09-25,Friday,Telmo,M,8,16
-2026-09-26,Saturday,Ana Margarida,A,16,0
-2026-09-26,Saturday,Cristina,M,8,16
-2026-09-26,Saturday,Pedro,A,16,0
-2026-09-26,Saturday,Raquel B,N,0,8
+2026-09-26,Saturday,Ana Martins,M,8,16
+2026-09-26,Saturday,Cristina,A,16,0
+2026-09-26,Saturday,Diogo João,M,8,16
+2026-09-26,Saturday,Leonardo,M,8,16
+2026-09-26,Saturday,Pedro,N,0,8
 2026-09-26,Saturday,Raquel M,M,8,16
 2026-09-26,Saturday,Richard,M,8,16
-2026-09-26,Saturday,Sandra,M,8,16
-2026-09-27,Sunday,Ana Catarina,M,8,16
-2026-09-27,Sunday,Cristina,M,8,16
+2026-09-26,Saturday,Telmo,A,16,0
+2026-09-27,Sunday,Ana Martins,A,16,0
+2026-09-27,Sunday,Anabela,M,8,16
 2026-09-27,Sunday,Diogo João,A,16,0
-2026-09-27,Sunday,Raquel M,A,16,0
+2026-09-27,Sunday,Leonardo,M,8,16
+2026-09-27,Sunday,Raquel B,M,8,16
+2026-09-27,Sunday,Raquel M,M,8,16
 2026-09-27,Sunday,Richard,N,0,8
-2026-09-27,Sunday,Rosa R,M,8,16
-2026-09-27,Sunday,Sandra,M,8,16
-2026-09-28,Monday,Ana Catarina,A,16,0
-2026-09-28,Monday,Ana Filipa,M,8,16
+2026-09-28,Monday,Ana Catarina,M,8,16
 2026-09-28,Monday,Ana Margarida,M,8,16
+2026-09-28,Monday,Ana Martins,A,16,0
 2026-09-28,Monday,Anabela,M,8,16
+2026-09-28,Monday,Celso,M,8,16
 2026-09-28,Monday,Cristina,M,8,16
-2026-09-28,Monday,Cátia,N,0,8
 2026-09-28,Monday,Diogo João,EA,14,22
 2026-09-28,Monday,Hugo,M,8,16
-2026-09-28,Monday,Leonardo,M,8,16
+2026-09-28,Monday,Leonardo,N,0,8
 2026-09-28,Monday,Raquel B,M,8,16
-2026-09-28,Monday,Raquel M,A,16,0
+2026-09-28,Monday,Raquel M,M,8,16
 2026-09-28,Monday,Rosa R,M,8,16
-2026-09-28,Monday,Sandra,M,8,16
+2026-09-28,Monday,Sandra,A,16,0
 2026-09-28,Monday,Telmo,M,8,16
-2026-09-29,Tuesday,Ana Margarida,EA,14,22
+2026-09-29,Tuesday,Ana Catarina,M,8,16
+2026-09-29,Tuesday,Ana Margarida,M,8,16
 2026-09-29,Tuesday,Anabela,A,16,0
+2026-09-29,Tuesday,Celso,M,8,16
+2026-09-29,Tuesday,Cristina,M,8,16
 2026-09-29,Tuesday,Diogo João,M,8,16
-2026-09-29,Tuesday,Hugo,N,0,8
-2026-09-29,Tuesday,Raquel B,A,16,0
-2026-09-30,Wednesday,Ana Filipa,M,8,16
+2026-09-29,Tuesday,Hugo,M,8,16
+2026-09-29,Tuesday,Pedro,M,8,16
+2026-09-29,Tuesday,Raquel B,M,8,16
+2026-09-29,Tuesday,Raquel M,N,0,8
+2026-09-29,Tuesday,Rosa R,A,16,0
+2026-09-29,Tuesday,Sandra,EA,14,22
+2026-09-29,Tuesday,Telmo,M,8,16
+2026-09-30,Wednesday,Ana Catarina,M,8,16
 2026-09-30,Wednesday,Ana Margarida,M,8,16
-2026-09-30,Wednesday,Anabela,A,16,0
+2026-09-30,Wednesday,Ana Martins,M,8,16
+2026-09-30,Wednesday,Anabela,EA,14,22
 2026-09-30,Wednesday,Celso,M,8,16
 2026-09-30,Wednesday,Cristina,M,8,16
-2026-09-30,Wednesday,Cátia,M,8,16
 2026-09-30,Wednesday,Diogo João,N,0,8
-2026-09-30,Wednesday,Leonardo,M,8,16
+2026-09-30,Wednesday,Hugo,M,8,16
 2026-09-30,Wednesday,Pedro,M,8,16
-2026-09-30,Wednesday,Raquel B,A,16,0
-2026-09-30,Wednesday,Raquel M,EA,14,22
+2026-09-30,Wednesday,Raquel B,M,8,16
 2026-09-30,Wednesday,Richard,M,8,16
+2026-09-30,Wednesday,Rosa R,A,16,0
 2026-09-30,Wednesday,Sandra,M,8,16
-2026-09-30,Wednesday,Telmo,M,8,16
+2026-09-30,Wednesday,Telmo,A,16,0

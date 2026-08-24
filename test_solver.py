@@ -56,6 +56,9 @@ class ValidationTests(unittest.TestCase):
         errors = solver.validate_schedule([], dt.date(2026, 9, 1), {})
         self.assertTrue(any("requires" in error for error in errors))
 
+    def test_weekday_morning_hard_floor_is_six(self):
+        self.assertEqual(solver.WEEKDAY_MORNING_HARD_MINIMUM, 6)
+
     def test_hospital_feedback_weights_are_active(self):
         weights = solver.Weights()
         self.assertGreater(weights.workday_balance, 0)

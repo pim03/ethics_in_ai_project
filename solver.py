@@ -34,6 +34,7 @@ SHIFT_TIMES = {
     "N": (0, 8),
 }
 SHIFT_DUR = 8
+WEEKDAY_MORNING_HARD_MINIMUM = 6
 
 
 class Availability(dict[str, set[dt.date]]):
@@ -95,7 +96,7 @@ class HemodinamicaWeights:
 
 HARD_CONSTRAINTS = {
     "one_shift_per_day": "At most one shift per worker per calendar day.",
-    "staffing_minimum": "Each shift meets its weekday/weekend minimum staffing, except the weekday morning floor (see morning_shortfall_key_day/other_day).",
+    "staffing_minimum": "Each shift meets its hard minimum staffing. Weekday mornings have a hard floor of six and a preferred target of ten (see morning_shortfall_key_day/other_day).",
     "availability": "Vacations and shift eligibility are respected.",
     "weekly_hours": "Assigned time does not exceed the weekly legal limit.",
     "monthly_hours": "Monthly hours respect the target cap and carried rest debt, plus an optional 24-32 h fair-shared overtime allowance (see monthly_overtime).",
@@ -133,8 +134,8 @@ SOFT_PREFERENCES = {
     "split_weekend": "Prefer working both weekend days instead of only one.",
     "vacation_adjacent_weekend": "Prefer not to work weekends touching a vacation period.",
     "schedule_changes": "Preserve existing assignments when repairing a published schedule.",
-    "morning_shortfall_key_day": "Avoid understaffing the weekday morning minimum on Monday/Wednesday/Friday; only paid when truly unavoidable.",
-    "morning_shortfall_other_day": "Avoid understaffing the weekday morning minimum on Tuesday/Thursday; tradeable under a genuine shortage.",
+    "morning_shortfall_key_day": "Avoid falling below the preferred weekday-morning target of ten on Monday/Wednesday/Friday; the hard floor of six remains mandatory.",
+    "morning_shortfall_other_day": "Avoid falling below the preferred weekday-morning target of ten on Tuesday/Thursday; the hard floor of six remains mandatory.",
     "monthly_overtime": "Avoid monthly overtime; when used at all, each worker takes on 24-32 extra hours, not an arbitrary smaller or larger share.",
 }
 
@@ -274,14 +275,10 @@ def build_model(
         for d in range(n_days):
             model.Add(_sum(x[p, d, s] for s in SHIFTS if (p, d, s) in x) <= 1)
 
-    # Hospital feedback: the weekday morning minimum is a hard target on
-    # Monday/Wednesday/Friday (the busiest exam days) and a softer one on
-    # Tuesday/Thursday, where exam volume gets rescheduled under a genuine
-    # shortage rather than forcing overtime. Both are modeled as a shortfall
-    # variable rather than a hard floor, so a truly unstaffable day reports a
-    # signalled, heavily-penalised gap instead of an outright solver failure
-    # — Monday/Wednesday/Friday's penalty is large enough to only be paid
-    # when understaffing is genuinely unavoidable.
+    # Every weekday morning must have at least six workers. The operational
+    # target remains ten: any gap between six and ten is explicit in the
+    # shortfall report and objective. Monday/Wednesday/Friday retain a much
+    # higher shortfall weight because they are the busiest exam days.
     morning_shortfalls: dict[int, cp_model.IntVar] = {}
     key_day_morning_shortfall: list[cp_model.IntVar] = []
     other_day_morning_shortfall: list[cp_model.IntVar] = []
@@ -291,6 +288,8 @@ def build_model(
             required = minimum_required(day, s, holiday_dates) + adjustment
             staffed = _sum(x[p, d, s] for p in range(len(PEOPLE)) if (p, d, s) in x)
             if s == MORNING and not _is_reduced_staffing_day(day, holiday_dates):
+                hard_floor = min(required, WEEKDAY_MORNING_HARD_MINIMUM + max(0, adjustment))
+                model.Add(staffed >= hard_floor)
                 shortfall = model.NewIntVar(0, required, f"morning_shortfall_{d}")
                 model.Add(staffed + shortfall >= required)
                 morning_shortfalls[d] = shortfall
@@ -1101,10 +1100,15 @@ def validate_schedule(
         for shift in SHIFTS:
             actual = staffing.get((day, shift), 0)
             required = minimum_required(day, shift, holiday_dates)
-            # Weekday mornings are a signalled, heavily-penalised soft target
-            # rather than a hard floor (hospital feedback: understaffing is
-            # sometimes unavoidable and gets reported, not treated as invalid).
+            # Weekday mornings have a hard floor of six and a preferred target
+            # of ten. Falling below the target is reported; falling below the
+            # floor invalidates the schedule.
             is_soft_morning = shift == MORNING and not _is_reduced_staffing_day(day, holiday_dates)
+            if is_soft_morning and actual < min(required, WEEKDAY_MORNING_HARD_MINIMUM):
+                errors.append(
+                    f"{day} {SHIFT_NAMES[shift]} has {actual}, requires hard minimum "
+                    f"{min(required, WEEKDAY_MORNING_HARD_MINIMUM)}"
+                )
             if actual < required and not is_soft_morning:
                 errors.append(f"{day} {SHIFT_NAMES[shift]} has {actual}, requires {required}")
             ceiling = maximum_allowed(day, shift, holiday_dates)
@@ -1291,6 +1295,8 @@ def solve_and_export(
         "carry_state": carry_state,
         "output": str(output),
     }
+    report_path = output.parent / "solver_report.json"
+    report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     return report
 

@@ -1,7 +1,7 @@
 scenario,description,feasible,status,solve_seconds,staffing_shortfalls,assignment_edits,replacement_equivalents,affected_workers,workload_gini,workload_gini_delta,night_gini,night_gini_delta,weekend_gini,weekend_gini_delta,objective,error
-single_day_absence,Ana Catarina becomes unavailable on 2026-09-16.,1,OPTIMAL,0.2232,80,5,3,3,0.1643,0.0003,0.2016,-0.0004,0.2044,0.0,43735975.0,
-night_worker_absence,Night worker Rosa R becomes unavailable on 2026-09-10.,1,OPTIMAL,0.2174,81,6,3,4,0.1644,0.0004,0.2054,0.0034,0.2044,0.0,43836770.0,
-three_day_absence,Cátia becomes unavailable for three consecutive days.,1,OPTIMAL,0.2113,80,7,4,5,0.1628,-0.0012,0.2048,0.0028,0.2044,0.0,44064665.0,
-morning_demand_increase,Morning demand increases by one on 2026-09-20.,1,OPTIMAL,0.2192,80,4,2,3,0.1618,-0.0022,0.202,0.0,0.2065,0.0021,43771625.0,
-night_demand_increase,Night demand increases by one on 2026-09-20.,1,OPTIMAL,0.2126,80,4,2,3,0.1618,-0.0022,0.1764,-0.0256,0.1998,-0.0046,43772095.0,
-simultaneous_absences,Two scheduled workers become unavailable on 2026-09-16.,1,OPTIMAL,0.2061,80,7,4,5,0.1645,0.0005,0.2009,-0.0011,0.2044,0.0,44000680.0,
+single_day_absence,Ana Catarina becomes unavailable on 2026-09-16.,1,OPTIMAL,0.3675,20,23,12,9,0.1315,-0.0397,0.1405,-0.014,0.2457,-0.0065,23340345.0,
+night_worker_absence,Night worker Richard becomes unavailable on 2026-09-10.,1,OPTIMAL,0.3816,20,23,12,9,0.1315,-0.0397,0.1534,-0.0011,0.2457,-0.0065,23341950.0,
+three_day_absence,Ana Catarina becomes unavailable for three consecutive days.,1,OPTIMAL,0.6102,21,22,11,9,0.1313,-0.0399,0.1377,-0.0168,0.2457,-0.0065,23576845.0,
+morning_demand_increase,Morning demand increases by one on 2026-09-20.,1,OPTIMAL,0.6632,20,20,10,10,0.1334,-0.0378,0.1545,0.0,0.2257,-0.0265,23114000.0,
+night_demand_increase,Night demand increases by one on 2026-09-20.,1,OPTIMAL,0.4867,20,21,11,9,0.1319,-0.0393,0.1418,-0.0127,0.2457,-0.0065,23212825.0,
+simultaneous_absences,Two scheduled workers become unavailable on 2026-09-16.,1,OPTIMAL,0.4727,20,29,15,10,0.1309,-0.0403,0.1405,-0.014,0.2457,-0.0065,24109210.0,

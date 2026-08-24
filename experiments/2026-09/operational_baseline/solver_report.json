@@ -1,8 +1,8 @@
 {
   "status": "OPTIMAL",
-  "objective": 60825.0,
-  "best_bound": 60825.0,
-  "solve_seconds": 6.6873,
+  "objective": 10030707.0,
+  "best_bound": 10030707.0,
+  "solve_seconds": 15.2385,
   "weights": {
     "workday_balance": 1,
     "workload_imbalance": 1,
@@ -11,6 +11,7 @@
     "isolated_rest_day": 0,
     "excess_afternoon_streak": 400,
     "night_ramp_mismatch": 150,
+    "night_after_vacation": 1000,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
     "weekend_imbalance": 0,
@@ -24,31 +25,33 @@
   },
   "objective_components": {
     "workday_balance": 21,
-    "workload_imbalance": 41504,
+    "workload_imbalance": 8736,
     "excess_work_streak": 12,
-    "isolated_work_day": 22,
+    "isolated_work_day": 27,
     "isolated_rest_day": 66,
     "excess_afternoon_streak": 0,
     "night_ramp_mismatch": 0,
+    "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
     "weekend_imbalance": 16,
-    "consecutive_weekends": 24,
-    "split_weekend": 38,
+    "consecutive_weekends": 23,
+    "split_weekend": 30,
     "vacation_adjacent_weekend": 13,
     "schedule_changes": 0,
-    "morning_shortfall_key_day": 0,
-    "morning_shortfall_other_day": 5,
-    "monthly_overtime": 336
+    "morning_shortfall_key_day": 1,
+    "morning_shortfall_other_day": 12,
+    "monthly_overtime": 319
   },
   "weighted_objective_components": {
     "workday_balance": 21,
-    "workload_imbalance": 41504,
+    "workload_imbalance": 8736,
     "excess_work_streak": 0,
     "isolated_work_day": 0,
     "isolated_rest_day": 0,
     "excess_afternoon_streak": 0,
     "night_ramp_mismatch": 0,
+    "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
     "weekend_imbalance": 0,
@@ -56,9 +59,9 @@
     "split_weekend": 0,
     "vacation_adjacent_weekend": 0,
     "schedule_changes": 0,
-    "morning_shortfall_key_day": 0,
-    "morning_shortfall_other_day": 2500,
-    "monthly_overtime": 16800
+    "morning_shortfall_key_day": 10000000,
+    "morning_shortfall_other_day": 6000,
+    "monthly_overtime": 15950
   },
   "worked_days": {
     "Celia L": 17,
@@ -69,30 +72,40 @@
     "Rosa R": 21,
     "Sandra": 21,
     "Pedro": 21,
-    "Lina": 8,
-    "Hugo": 21,
-    "Celso": 21,
+    "Lina": 20,
+    "Hugo": 20,
+    "Celso": 17,
     "Richard": 21,
     "Leonardo": 21,
     "Raquel M": 21,
-    "C\u00e1tia": 18,
-    "Ana Catarina": 18,
+    "C\u00e1tia": 0,
+    "Ana Catarina": 21,
     "Ana Margarida": 12,
     "Diogo Jo\u00e3o": 12,
-    "Ana Filipa": 21,
+    "Ana Martins": 21,
     "Ana Sofia": 0,
     "Cristina": 18
   },
   "morning_understaffed_days": [
     {
+      "date": "2026-09-07",
+      "weekday": "Monday",
+      "short_by": 1
+    },
+    {
       "date": "2026-09-08",
       "weekday": "Tuesday",
-      "short_by": 3
+      "short_by": 4
     },
     {
       "date": "2026-09-10",
       "weekday": "Thursday",
-      "short_by": 1
+      "short_by": 4
+    },
+    {
+      "date": "2026-09-15",
+      "weekday": "Tuesday",
+      "short_by": 3
     },
     {
       "date": "2026-09-17",
@@ -123,15 +136,11 @@
     },
     {
       "person": "Lina",
-      "extra_hours": 28
+      "extra_hours": 24
     },
     {
       "person": "Hugo",
-      "extra_hours": 32
-    },
-    {
-      "person": "Celso",
-      "extra_hours": 29
+      "extra_hours": 24
     },
     {
       "person": "Richard",
@@ -146,7 +155,11 @@
       "extra_hours": 29
     },
     {
-      "person": "Ana Filipa",
+      "person": "Ana Catarina",
+      "extra_hours": 24
+    },
+    {
+      "person": "Ana Martins",
       "extra_hours": 24
     }
   ],
@@ -161,17 +174,17 @@
       "Rosa R": 21,
       "Sandra": 21,
       "Pedro": 21,
-      "Lina": 8,
-      "Hugo": 21,
-      "Celso": 21,
+      "Lina": 20,
+      "Hugo": 20,
+      "Celso": 17,
       "Richard": 21,
       "Leonardo": 21,
       "Raquel M": 21,
-      "C\u00e1tia": 18,
-      "Ana Catarina": 18,
+      "C\u00e1tia": 0,
+      "Ana Catarina": 21,
       "Ana Margarida": 12,
       "Diogo Jo\u00e3o": 12,
-      "Ana Filipa": 21,
+      "Ana Martins": 21,
       "Ana Sofia": 0,
       "Cristina": 18
     },
@@ -194,7 +207,7 @@
       "Ana Catarina": 0,
       "Ana Margarida": 0,
       "Diogo Jo\u00e3o": 0,
-      "Ana Filipa": 0,
+      "Ana Martins": 0,
       "Ana Sofia": 0,
       "Cristina": 0
     },
@@ -218,7 +231,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       },
@@ -241,7 +254,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       },
@@ -264,7 +277,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       }

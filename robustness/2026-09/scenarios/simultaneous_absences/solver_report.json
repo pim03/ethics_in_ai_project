@@ -1,8 +1,8 @@
 {
   "status": "OPTIMAL",
-  "objective": 44000680.0,
-  "best_bound": 44000680.0,
-  "solve_seconds": 0.2061,
+  "objective": 24109210.0,
+  "best_bound": 24109210.0,
+  "solve_seconds": 0.4727,
   "weights": {
     "workday_balance": 100000,
     "workload_imbalance": 1000,
@@ -11,6 +11,7 @@
     "isolated_rest_day": 200,
     "excess_afternoon_streak": 400,
     "night_ramp_mismatch": 150,
+    "night_after_vacation": 1000,
     "holiday_rotation": 1000,
     "special_holiday_rotation": 2000,
     "weekend_imbalance": 30,
@@ -23,143 +24,193 @@
     "monthly_overtime": 50
   },
   "objective_components": {
-    "workday_balance": 16,
-    "workload_imbalance": 41632,
+    "workday_balance": 21,
+    "workload_imbalance": 9072,
     "excess_work_streak": 0,
-    "isolated_work_day": 40,
-    "isolated_rest_day": 65,
+    "isolated_work_day": 2,
+    "isolated_rest_day": 40,
     "excess_afternoon_streak": 0,
-    "night_ramp_mismatch": 11,
+    "night_ramp_mismatch": 10,
+    "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
-    "weekend_imbalance": 6,
-    "consecutive_weekends": 11,
-    "split_weekend": 16,
-    "vacation_adjacent_weekend": 14,
-    "schedule_changes": 7,
-    "morning_shortfall_key_day": 0,
-    "morning_shortfall_other_day": 80,
-    "monthly_overtime": 28
+    "weekend_imbalance": 12,
+    "consecutive_weekends": 23,
+    "split_weekend": 23,
+    "vacation_adjacent_weekend": 12,
+    "schedule_changes": 29,
+    "morning_shortfall_key_day": 1,
+    "morning_shortfall_other_day": 19,
+    "monthly_overtime": 330
   },
   "weighted_objective_components": {
-    "workday_balance": 1600000,
-    "workload_imbalance": 41632000,
+    "workday_balance": 2100000,
+    "workload_imbalance": 9072000,
     "excess_work_streak": 0,
-    "isolated_work_day": 12000,
-    "isolated_rest_day": 13000,
+    "isolated_work_day": 600,
+    "isolated_rest_day": 8000,
     "excess_afternoon_streak": 0,
-    "night_ramp_mismatch": 1650,
+    "night_ramp_mismatch": 1500,
+    "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
-    "weekend_imbalance": 180,
-    "consecutive_weekends": 220,
-    "split_weekend": 160,
-    "vacation_adjacent_weekend": 70,
-    "schedule_changes": 700000,
-    "morning_shortfall_key_day": 0,
-    "morning_shortfall_other_day": 40000,
-    "monthly_overtime": 1400
+    "weekend_imbalance": 360,
+    "consecutive_weekends": 460,
+    "split_weekend": 230,
+    "vacation_adjacent_weekend": 60,
+    "schedule_changes": 2900000,
+    "morning_shortfall_key_day": 10000000,
+    "morning_shortfall_other_day": 9500,
+    "monthly_overtime": 16500
   },
   "worked_days": {
-    "Celia L": 16,
-    "Telmo": 15,
+    "Celia L": 17,
+    "Telmo": 20,
     "Anabela": 13,
-    "Fernanda": 15,
+    "Fernanda": 20,
     "Raquel B": 13,
-    "Rosa R": 15,
-    "Sandra": 15,
-    "Pedro": 15,
-    "Lina": 8,
-    "Hugo": 15,
-    "Celso": 15,
-    "Richard": 15,
-    "Leonardo": 16,
-    "Raquel M": 15,
-    "C\u00e1tia": 15,
-    "Ana Catarina": 15,
+    "Rosa R": 21,
+    "Sandra": 20,
+    "Pedro": 21,
+    "Lina": 18,
+    "Hugo": 20,
+    "Celso": 18,
+    "Richard": 21,
+    "Leonardo": 21,
+    "Raquel M": 21,
+    "C\u00e1tia": 0,
+    "Ana Catarina": 21,
     "Ana Margarida": 12,
     "Diogo Jo\u00e3o": 12,
-    "Ana Filipa": 14,
+    "Ana Martins": 21,
     "Ana Sofia": 0,
-    "Cristina": 15
+    "Cristina": 18
   },
   "morning_understaffed_days": [
     {
-      "date": "2026-09-01",
-      "weekday": "Tuesday",
-      "short_by": 10
-    },
-    {
       "date": "2026-09-03",
       "weekday": "Thursday",
-      "short_by": 6
+      "short_by": 1
     },
     {
       "date": "2026-09-08",
       "weekday": "Tuesday",
-      "short_by": 10
+      "short_by": 4
+    },
+    {
+      "date": "2026-09-09",
+      "weekday": "Wednesday",
+      "short_by": 1
     },
     {
       "date": "2026-09-10",
       "weekday": "Thursday",
-      "short_by": 10
+      "short_by": 4
     },
     {
       "date": "2026-09-15",
       "weekday": "Tuesday",
-      "short_by": 9
+      "short_by": 4
     },
     {
       "date": "2026-09-17",
       "weekday": "Thursday",
-      "short_by": 10
+      "short_by": 3
     },
     {
       "date": "2026-09-22",
       "weekday": "Tuesday",
-      "short_by": 9
+      "short_by": 1
     },
     {
       "date": "2026-09-24",
       "weekday": "Thursday",
-      "short_by": 7
+      "short_by": 1
     },
     {
       "date": "2026-09-29",
       "weekday": "Tuesday",
-      "short_by": 9
+      "short_by": 1
     }
   ],
   "monthly_overtime_used": [
     {
-      "person": "Lina",
+      "person": "Telmo",
+      "extra_hours": 24
+    },
+    {
+      "person": "Fernanda",
+      "extra_hours": 24
+    },
+    {
+      "person": "Rosa R",
       "extra_hours": 28
+    },
+    {
+      "person": "Sandra",
+      "extra_hours": 24
+    },
+    {
+      "person": "Pedro",
+      "extra_hours": 29
+    },
+    {
+      "person": "Lina",
+      "extra_hours": 24
+    },
+    {
+      "person": "Hugo",
+      "extra_hours": 24
+    },
+    {
+      "person": "Celso",
+      "extra_hours": 24
+    },
+    {
+      "person": "Richard",
+      "extra_hours": 28
+    },
+    {
+      "person": "Leonardo",
+      "extra_hours": 24
+    },
+    {
+      "person": "Raquel M",
+      "extra_hours": 29
+    },
+    {
+      "person": "Ana Catarina",
+      "extra_hours": 24
+    },
+    {
+      "person": "Ana Martins",
+      "extra_hours": 24
     }
   ],
   "carry_state": {
     "through": "2026-09-30",
     "cumulative_workdays": {
-      "Celia L": 16,
-      "Telmo": 15,
+      "Celia L": 17,
+      "Telmo": 20,
       "Anabela": 13,
-      "Fernanda": 15,
+      "Fernanda": 20,
       "Raquel B": 13,
-      "Rosa R": 15,
-      "Sandra": 15,
-      "Pedro": 15,
-      "Lina": 8,
-      "Hugo": 15,
-      "Celso": 15,
-      "Richard": 15,
-      "Leonardo": 16,
-      "Raquel M": 15,
-      "C\u00e1tia": 15,
-      "Ana Catarina": 15,
+      "Rosa R": 21,
+      "Sandra": 20,
+      "Pedro": 21,
+      "Lina": 18,
+      "Hugo": 20,
+      "Celso": 18,
+      "Richard": 21,
+      "Leonardo": 21,
+      "Raquel M": 21,
+      "C\u00e1tia": 0,
+      "Ana Catarina": 21,
       "Ana Margarida": 12,
       "Diogo Jo\u00e3o": 12,
-      "Ana Filipa": 14,
+      "Ana Martins": 21,
       "Ana Sofia": 0,
-      "Cristina": 15
+      "Cristina": 18
     },
     "holiday_history": {
       "Celia L": 0,
@@ -180,7 +231,7 @@
       "Ana Catarina": 0,
       "Ana Margarida": 0,
       "Diogo Jo\u00e3o": 0,
-      "Ana Filipa": 0,
+      "Ana Martins": 0,
       "Ana Sofia": 0,
       "Cristina": 0
     },
@@ -204,7 +255,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       },
@@ -227,7 +278,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       },
@@ -250,7 +301,7 @@
         "Ana Catarina": 0,
         "Ana Margarida": 0,
         "Diogo Jo\u00e3o": 0,
-        "Ana Filipa": 0,
+        "Ana Martins": 0,
         "Ana Sofia": 0,
         "Cristina": 0
       }

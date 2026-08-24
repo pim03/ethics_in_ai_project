@@ -40,7 +40,7 @@ Matricola: & \textbf{1168774}
 \end{center}
 
 \begin{abstract}
-This project develops and evaluates a decision-support system for monthly shift scheduling of radiology technicians at the Hospital of Covilh\~a, Portugal. The real process is characterised by minimum coverage requirements, heterogeneous shift eligibility, vacations and other absences, working-time limits, rest rules, individual preferences, and fairness obligations that extend across months. The system formalises these requirements as a constraint optimisation problem and solves it with the CP-SAT solver. Hard constraints encode conditions that must not be violated; weighted soft constraints represent preferences and operational compromises. The evaluation addresses three dimensions of Trustworthy AI. Fairness is assessed through raw and availability-normalised workload, night and weekend burdens, Gini coefficients, and Jain indices, complemented by five objective-weight profiles. Robustness is evaluated in six controlled disruption scenarios, all of which produced feasible repairs while changing between four and seven assignments. Explainability is supported through a published constraint catalogue, assignment-level rule facts, non-assignment diagnostics, repair explanations, and counterfactual re-solving. A September 2026 case study demonstrates strong equality in night allocation but also exposes a structural staffing-capacity gap: the model protects Monday, Wednesday and Friday morning coverage while recording large penalised shortfalls on Tuesdays and Thursdays. This result illustrates why optimisation status must not be confused with operational adequacy. The system is therefore presented as an auditable assistant for human schedulers, not an autonomous authority.
+This project develops and evaluates a decision-support system for monthly shift scheduling of radiology technicians at the Hospital of Covilh\~a, Portugal. The real process is characterised by minimum coverage requirements, heterogeneous shift eligibility, vacations and other absences, working-time limits, rest rules, individual preferences, and fairness obligations that extend across months. The system formalises these requirements as a constraint optimisation problem and solves it with the CP-SAT solver. Hard constraints encode conditions that must not be violated; weighted soft constraints represent preferences and operational compromises. The evaluation addresses three dimensions of Trustworthy AI. Fairness is assessed through raw and availability-normalised workload, night and weekend burdens, Gini coefficients, and Jain indices, complemented by five objective-weight profiles. Robustness is evaluated in six controlled disruption scenarios, all of which produced feasible repairs while changing between 20 and 29 assignments. Explainability is supported through a published constraint catalogue, assignment-level rule facts, non-assignment diagnostics, repair explanations, and counterfactual re-solving. A September 2026 case study demonstrates strong equality in night allocation and enforces a hard minimum of six imaging workers on every weekday morning. Meeting this floor requires 316 overtime hours shared by 13 workers, while the preferred target of 10 remains unmet on 10 days. This result illustrates why optimisation status must not be confused with complete operational adequacy. The system is therefore presented as an auditable assistant for human schedulers, not an autonomous authority.
 \end{abstract}
 
 \tableofcontents
@@ -115,11 +115,11 @@ The model catalogues each hard constraint so that the same language can be reuse
   \item no night immediately after an early afternoon;
   \item no work on the day after a night and minimum spacing between nights;
   \item floor/ceiling sharing of night shifts among eligible workers;
-  \item minimum staffing for afternoons and nights and maximum weekday-morning staffing;
+  \item minimum staffing for afternoons and nights, a hard weekday-morning floor of six, and maximum weekday-morning staffing;
   \item hemodynamics-specific prevention alternation, compensatory rest, and morning-presence rules.
 \end{itemize}
 
-The weekday morning target deserves special attention. The requested minimum is 10 workers, but morning deficit is represented by a non-negative slack variable. On Monday, Wednesday, and Friday it receives a weight of $10{,}000{,}000$; on Tuesday and Thursday it receives a weight of 500. Therefore weekday morning coverage is a strongly prioritised soft target rather than an unconditional hard guarantee. This design permits the solver to return a timetable when the available monthly capacity cannot cover every requested post, but any such timetable must be reported as understaffed.
+The weekday morning requirement has two levels. Six workers are an unconditional hard minimum, while 10 workers remain the preferred operational target. Any gap between six and 10 is represented by a non-negative slack variable. On Monday, Wednesday, and Friday it receives a weight of $10{,}000{,}000$; on Tuesday and Thursday it receives a weight of 500. This design permits transparent prioritisation under limited capacity without ever producing a weekday morning with fewer than six assigned imaging workers.
 
 \subsection{Soft preferences and objective}
 
@@ -188,13 +188,13 @@ The local reports deliberately state that legality and tight coverage do not pro
 
 The main experiment schedules September 2026. The configuration contains 21 radiology workers; 13 are night-eligible and 18 have at least one weekend opportunity. C\'atia is on sick leave for the entire month and Ana Sofia is assigned to consultations throughout the month, so both receive zero rostered shifts. Other workers have heterogeneous vacation periods. These facts materially affect raw workload equality.
 
-The principal solver run used a 300-second limit. CP-SAT returned \textsc{Feasible}, with objective $5{,}956{,}000$, best bound $5{,}955{,}210$, and a relative gap of approximately 0.013\%. This is strong but not certified optimality; the report therefore uses ``feasible schedule'' rather than ``optimal schedule.''
+The final principal solver run used a 60-second limit. CP-SAT returned \textsc{Feasible}, with objective $16{,}326{,}175$, best bound $16{,}318{,}680$, and a relative gap of approximately 0.046\%. This is strong but not certified optimality; the report therefore uses ``feasible schedule'' rather than ``optimal schedule.''
 
 \subsection{Operational result}
 
-Most active and available full-time workers receive 16 shifts (128 hours). Workers with long absences receive 12 or 13 shifts; Lina receives eight ordinary schedule shifts and is the sole reported user of 28 overtime hours under the model's overtime accounting. No excess-work-streak, excess-afternoon-streak, night-after-vacation, or key-day morning-shortfall penalties occur.
+Most active and available full-time workers receive 20 shifts (160 hours). Workers with long absences receive 12 or 13 shifts, while Lina receives eight imaging shifts because her hemodynamics work is accounted for separately. Enforcing the six-person weekday-morning floor requires 316 overtime hours: 12 workers receive 24 extra hours and Lina receives 28. No excess-work-streak, excess-afternoon-streak, or night-after-vacation penalties occur.
 
-However, nine Tuesday/Thursday dates have recorded weekday-morning deficits, totalling 82 missing worker-shifts: September 1, 3, 8, 10, 15, 17, 22, 24, and 29. Individual deficits range from 7 to 10 against the requested morning target. Monday, Wednesday, and Friday have no recorded morning deficit. The result shows a structural conflict between coverage demand, availability, and monthly capacity under the chosen prioritisation. It should not be deployed without an operational response such as revising demand, adding staff, changing contractual assumptions, or obtaining approved cross-coverage.
+No weekday morning has fewer than six imaging workers. Ten dates remain below the preferred target of 10, totalling 31 missing worker-shifts relative to that target: September 1, 3, 8, 9, 10, 15, 17, 22, 24, and 29. Actual coverage on these dates ranges from six to nine. The result shows that the hard safety floor can be met, but only through extensive overtime, and that full target coverage still conflicts with availability and monthly capacity. Deployment would therefore require explicit approval of the overtime burden and consideration of additional staffing or cross-coverage.
 
 \begin{figure}[H]
   \centering
@@ -223,12 +223,12 @@ Table~\ref{tab:fairness} reports the main fairness results. Night allocation is 
 \toprule
 Metric & Mean & Min. & Max. & Gini & Jain \\
 \midrule
-Assigned hours & 107.43 & 0 & 128 & 0.1510 & 0.8860 \\
-Availability-normalised workload & 0.5668 & 0 & 0.8571 & 0.1972 & 0.8674 \\
+Assigned hours & 126.86 & 0 & 160 & 0.1876 & 0.8652 \\
+Availability-normalised workload & 0.6562 & 0 & 0.9524 & 0.1712 & 0.8789 \\
 Night shifts (eligible workers) & 2.3077 & 2 & 3 & 0.0923 & 0.9615 \\
-Normalised night burden & 0.0993 & 0.0667 & 0.1429 & 0.1375 & 0.9424 \\
-Weekends (eligible workers) & 1.8333 & 0 & 3 & 0.2138 & 0.8521 \\
-Normalised weekend burden & 0.6250 & 0 & 1 & 0.2613 & 0.8198 \\
+Normalised night burden & 0.1004 & 0.0667 & 0.1429 & 0.1545 & 0.9286 \\
+Weekends (eligible workers) & 2.2222 & 0 & 4 & 0.3194 & 0.7533 \\
+Normalised weekend burden & 0.7037 & 0 & 1 & 0.2522 & 0.8155 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -244,7 +244,7 @@ Normalised weekend burden & 0.6250 & 0 & 1 & 0.2613 & 0.8198 \\
 
 Five objective profiles were evaluated: operational baseline, workload-focused, weekend-focused, preference-focused, and balanced. The profiles are not directly ranked by their raw objective values because their weights differ. Instead, Table~\ref{tab:profiles} compares common output metrics.
 
-The operational baseline has the best normalised-workload Gini (0.1294) and a relatively even weekend distribution (0.1298), but its raw workload Gini is 0.1549. All four fairness-oriented profiles reduce raw workload Gini to 0.0942 while raising normalised-workload Gini to 0.1640. The weekend-focused profile achieves the best weekend Gini (0.1188) among these experiments; the preference-focused profile has a worse weekend Gini (0.2438) while reducing the reported preference cost to 284. The lowest preference cost is 282 for the weekend-focused profile, showing that the named dimensions are interdependent rather than a simple one-axis trade-off.
+The preference-focused profile has the best normalised-workload Gini (0.1286) and lowest reported preference cost (426), but the worst weekend Gini (0.3395). The weekend-focused profile achieves the best weekend Gini (0.0859), at a preference cost of 476. Raw workload Gini varies only from 0.1780 to 0.1836 because the hard coverage floor and required overtime strongly constrain total workload. The profiles therefore mainly redistribute weekend and pattern burdens rather than eliminating the underlying capacity requirement.
 
 \begin{table}[H]
 \centering
@@ -255,11 +255,11 @@ The operational baseline has the best normalised-workload Gini (0.1294) and a re
 \toprule
 Profile & Status & Workload $G$ & Norm. work $G$ & Night $G$ & Weekend $G$ & Pref. \\
 \midrule
-Operational baseline & Optimal & 0.1549 & 0.1294 & 0.1757 & 0.1298 & 553 \\
-Workload-focused & Feasible & 0.0942 & 0.1640 & 0.1907 & 0.1839 & 304 \\
-Weekend-focused & Feasible & 0.0942 & 0.1640 & 0.1757 & 0.1188 & 282 \\
-Preference-focused & Feasible & 0.0942 & 0.1640 & 0.1613 & 0.2438 & 284 \\
-Balanced & Feasible & 0.0942 & 0.1640 & 0.1757 & 0.1768 & 289 \\
+Operational baseline & Optimal & 0.1780 & 0.1317 & 0.1480 & 0.1490 & 540 \\
+Workload-focused & Feasible & 0.1780 & 0.1317 & 0.1480 & 0.2114 & 465 \\
+Weekend-focused & Feasible & 0.1809 & 0.1326 & 0.1480 & 0.0859 & 476 \\
+Preference-focused & Feasible & 0.1824 & 0.1286 & 0.1454 & 0.3395 & 426 \\
+Balanced & Feasible & 0.1836 & 0.1287 & 0.1480 & 0.2278 & 463 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -281,9 +281,9 @@ Balanced & Feasible & 0.0942 & 0.1640 & 0.1757 & 0.1768 & 289 \\
 
 \subsection{Robustness results}
 
-All six disruption scenarios produced feasible, solver-certified optimal repairs in approximately 0.21--0.23 seconds. The repairs changed four to seven assignment rows, corresponding to two to four replacement-equivalent changes, and affected three to five workers. Fairness changes were small: workload Gini deltas lie between $-0.0022$ and $+0.0005$; night Gini deltas between $-0.0256$ and $+0.0034$; weekend Gini deltas between $-0.0046$ and $+0.0021$.
+All six disruption scenarios produced feasible, solver-certified optimal repairs in less than one second. The repairs changed 20 to 29 assignment rows, corresponding to 10 to 15 replacement-equivalent changes, and affected nine or 10 workers. The stronger coverage floor consequently makes repairs less local than in the earlier formulation. Workload Gini deltas lie between $-0.0403$ and $-0.0378$; night Gini deltas between $-0.0168$ and 0; weekend Gini deltas between $-0.0265$ and $-0.0065$.
 
-These results support local resilience to the tested perturbations. They do not establish resilience to larger outbreaks, extended understaffing, incorrect contract data, or a change in the legal interpretation of rest rules. The robustness run also inherits the baseline morning-capacity problem: the recorded ``staffing shortfalls'' are 80 or 81 across scenarios, so successful repair should be read as preserving and minimally adapting an already capacity-constrained plan.
+These results support feasibility under the tested perturbations, but also show that repairs can propagate across much of the roster when the system is operating close to its capacity floor. They do not establish resilience to larger outbreaks, extended understaffing, incorrect contract data, or a change in the legal interpretation of rest rules. ``Staffing shortfall'' in this experiment measures distance from the preferred target, not violation of the six-person hard floor.
 
 \begin{table}[H]
 \centering
@@ -294,12 +294,12 @@ These results support local resilience to the tested perturbations. They do not 
 \toprule
 Scenario & Edits & Replacements & Workers & $\Delta G_W$ & $\Delta G_N$ \\
 \midrule
-Single-day absence & 5 & 3 & 3 & +0.0003 & $-0.0004$ \\
-Night-worker absence & 6 & 3 & 4 & +0.0004 & +0.0034 \\
-Three-day absence & 7 & 4 & 5 & $-0.0012$ & +0.0028 \\
-Morning-demand increase & 4 & 2 & 3 & $-0.0022$ & 0.0000 \\
-Night-demand increase & 4 & 2 & 3 & $-0.0022$ & $-0.0256$ \\
-Simultaneous absences & 7 & 4 & 5 & +0.0005 & $-0.0011$ \\
+Single-day absence & 23 & 12 & 9 & $-0.0397$ & $-0.0140$ \\
+Night-worker absence & 23 & 12 & 9 & $-0.0397$ & $-0.0011$ \\
+Three-day absence & 22 & 11 & 9 & $-0.0399$ & $-0.0168$ \\
+Morning-demand increase & 20 & 10 & 10 & $-0.0378$ & 0.0000 \\
+Night-demand increase & 21 & 11 & 9 & $-0.0393$ & $-0.0127$ \\
+Simultaneous absences & 29 & 15 & 10 & $-0.0403$ & $-0.0140$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -345,7 +345,7 @@ Important failure modes include incomplete absence data, mistaken shift eligibil
 
 The evaluation concerns one main month and a bounded set of synthetic disruptions. It does not constitute a prospective clinical deployment study. There is no comparison against historical manual schedules or worker satisfaction data, so claims about improved fairness or administrative time cannot yet be made. The objective weights have not been elicited through a formal multi-stakeholder process. Group fairness is not assessed because protected attributes are unavailable. Statistical metrics are descriptive and sensitive to the included population and opportunity definitions.
 
-The current weekday-morning slack formulation allows severe Tuesday/Thursday deficits. Although this makes scarcity explicit and preserves solvability, the label ``feasible'' can be misunderstood. A production interface should display two statuses: legal/model feasibility and operational coverage adequacy. It should also refuse automatic publication when any critical coverage threshold is missed.
+The weekday-morning formulation now prevents coverage below six, while retaining 10 as the preferred target. A production interface should display both hard-floor compliance and distance from the operational target. It should also require explicit approval of the substantial overtime needed to maintain the floor.
 
 Counterfactual explanations may be computationally expensive and can vary with the solver time limit. Local explanations do not yield a complete causal decomposition of a global optimum. Finally, the code relies on the accuracy of local configuration files and has not been independently audited for compliance with Portuguese employment law or hospital policy.
 
@@ -353,7 +353,7 @@ Counterfactual explanations may be computationally expensive and can vary with t
 
 The project demonstrates that radiology scheduling can be represented as an auditable optimisation problem without reducing Trustworthy AI to a single fairness score. The implementation generates reproducible schedules, exposes hard rules and weighted compromises, measures distributional outcomes, repairs bounded disruptions with few changes, and produces explanations that acknowledge their limits.
 
-The September case study has two central findings. First, night work can be distributed quite evenly among eligible workers: the night-count Gini is 0.0923 and Jain index is 0.9615. Second, requested staffing and available capacity are not jointly satisfied under the evaluated assumptions: nine Tuesday/Thursday mornings exhibit severe deficits. This is not merely a technical inconvenience; it is precisely the type of ethically and operationally important conflict that a transparent system should reveal rather than conceal.
+The September case study has two central findings. First, night work can be distributed quite evenly among eligible workers: the night-count Gini is 0.0923 and Jain index is 0.9615. Second, a hard floor of six weekday-morning workers is feasible, but it requires 316 overtime hours across 13 workers and still leaves 10 days below the preferred target of 10. This is precisely the type of ethically and operationally important trade-off that a transparent system should reveal rather than conceal.
 
 Future work should validate every constraint and weight with schedulers and worker representatives, compare generated and historical rosters, add formal skill-mix requirements, distinguish critical from negotiable coverage in the user interface, and evaluate worker-perceived fairness. Longer multi-month experiments should test carried fairness and holiday rotation. A deployment study should measure correction rates, planning time, stability, contestation outcomes, and whether explanations improve appropriate trust rather than simple acceptance.
 
@@ -402,7 +402,7 @@ Identifier & Meaning \\
 \midrule
 \endhead
 \code{one\_shift\_per\_day} & At most one shift per worker and calendar day. \\
-\code{staffing\_minimum} & Afternoon and night minima are mandatory; weekday-morning targets use explicit slack as discussed in the report. \\
+\code{staffing\_minimum} & Afternoon and night minima are mandatory; weekday mornings have a hard floor of six and a preferred target of 10. \\
 \code{availability} & Vacations, consultation assignment, sick leave, and shift eligibility are respected. \\
 \code{weekly\_hours} & Weekly assigned time does not exceed the configured legal limit. \\
 \code{monthly\_hours} & Monthly hours respect contractual capacity and carried rest, with bounded overtime where enabled. \\
