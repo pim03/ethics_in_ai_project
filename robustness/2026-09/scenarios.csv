@@ -1,0 +1,7 @@
+scenario,description,feasible,status,solve_seconds,staffing_shortfalls,assignment_edits,replacement_equivalents,affected_workers,workload_gini,workload_gini_delta,night_gini,night_gini_delta,weekend_gini,weekend_gini_delta,objective,error
+single_day_absence,Ana Catarina becomes unavailable on 2026-09-16.,1,OPTIMAL,0.2232,80,5,3,3,0.1643,0.0003,0.2016,-0.0004,0.2044,0.0,43735975.0,
+night_worker_absence,Night worker Rosa R becomes unavailable on 2026-09-10.,1,OPTIMAL,0.2174,81,6,3,4,0.1644,0.0004,0.2054,0.0034,0.2044,0.0,43836770.0,
+three_day_absence,Cátia becomes unavailable for three consecutive days.,1,OPTIMAL,0.2113,80,7,4,5,0.1628,-0.0012,0.2048,0.0028,0.2044,0.0,44064665.0,
+morning_demand_increase,Morning demand increases by one on 2026-09-20.,1,OPTIMAL,0.2192,80,4,2,3,0.1618,-0.0022,0.202,0.0,0.2065,0.0021,43771625.0,
+night_demand_increase,Night demand increases by one on 2026-09-20.,1,OPTIMAL,0.2126,80,4,2,3,0.1618,-0.0022,0.1764,-0.0256,0.1998,-0.0046,43772095.0,
+simultaneous_absences,Two scheduled workers become unavailable on 2026-09-16.,1,OPTIMAL,0.2061,80,7,4,5,0.1645,0.0005,0.2009,-0.0011,0.2044,0.0,44000680.0,

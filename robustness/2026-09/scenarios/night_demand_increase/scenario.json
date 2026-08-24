@@ -1,0 +1,12 @@
+{
+  "name": "night_demand_increase",
+  "description": "Night demand increases by one on 2026-09-20.",
+  "unavailable": [],
+  "demand": [
+    [
+      "2026-09-20",
+      2,
+      1
+    ]
+  ]
+}

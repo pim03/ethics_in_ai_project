@@ -1,0 +1,512 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\newcommand{\validar}{\textcolor{blue!70!black}{\textbf{A validar}}}
+\newcommand{\dura}{\textbf{Restrição obrigatória}}
+\newcommand{\suave}{\textbf{Preferência otimizada}}
+
+\title{Escalas dos Técnicos de Radiologia\\
+Documento de Restrições para Validação pela Equipa Hospitalar}
+\author{Projeto de apoio à decisão para elaboração de escalas}
+\date{Versão de \today}
+
+\begin{document}
+\maketitle
+
+\section{Objetivo deste documento}
+
+Este documento descreve, em linguagem acessível, as restrições e preferências
+atualmente implementadas no protótipo computacional de elaboração mensal das
+escalas dos técnicos de radiologia. O seu objetivo é permitir que a equipa do
+Hospital da Covilhã confirme, corrija ou complete as regras antes de estas serem
+consideradas representativas da prática real.
+
+O sistema utiliza programação por restrições para procurar uma escala que
+satisfaça todas as regras obrigatórias e, entre as escalas admissíveis, procure
+uma distribuição equilibrada do trabalho e das tarefas menos desejáveis.
+
+\textbf{Nota importante:} as regras abaixo descrevem o que está implementado no
+software. Não constituem, por si só, uma interpretação validada da legislação,
+dos contratos de trabalho, das normas clínicas ou dos procedimentos internos do
+Hospital. Esses elementos devem ser confirmados pelas pessoas competentes.
+
+\section{Terminologia}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.18\textwidth}
+                  >{\raggedright\arraybackslash}p{0.24\textwidth}
+                  >{\raggedright\arraybackslash}p{0.48\textwidth}}
+\toprule
+\textbf{Código} & \textbf{Horário implementado} & \textbf{Descrição} \\
+\midrule
+\endhead
+M  & 08:00--16:00 & Turno da manhã. \\
+A  & 16:00--00:00 & Turno normal da tarde. \\
+EA & 14:00--22:00 & Turno antecipado da tarde. Para efeitos de cobertura, conta como turno da tarde. \\
+N  & 00:00--08:00 & Turno da noite. \\
+\bottomrule
+\end{longtable}
+
+Todos os turnos são contabilizados como oito horas de trabalho.
+
+\section{Restrições obrigatórias atualmente implementadas}
+
+Uma restrição obrigatória não pode ser violada. Se todas as restrições
+obrigatórias forem incompatíveis, o sistema não produz uma escala.
+
+\subsection{Uma atribuição diária por técnico}
+
+Cada técnico pode realizar, no máximo, um turno por dia civil. Um técnico pode
+também ficar sem turno nesse dia.
+
+\textbf{Questão para validação:} \validar{} --- existem situações em que um
+técnico realiza dois períodos de trabalho no mesmo dia, mesmo que a soma não
+ultrapasse o horário contratual?
+
+\subsection{Cobertura mínima por turno}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+& \textbf{Manhã} & \textbf{Tarde (A ou EA)} & \textbf{Noite} \\
+\midrule
+Segunda a sexta-feira & 7 & 3 & 1 \\
+Sábado e domingo      & 3 & 3 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Estes valores são mínimos. O modelo permite, tecnicamente, colocar mais pessoas
+do que o mínimo, embora a solução atual tenha exatamente o número mínimo de
+atribuições necessário.
+
+\textbf{Questões para validação:}
+\begin{itemize}
+    \item \validar{} --- estes números são corretos para todos os dias do mês?
+    \item \validar{} --- feriados devem seguir a regra de fim de semana ou uma regra própria?
+    \item \validar{} --- existem dias, serviços ou modalidades com necessidades diferentes?
+    \item \validar{} --- deve existir também um limite máximo de técnicos por turno?
+\end{itemize}
+
+\subsection{Turno antecipado da tarde}
+
+Em cada dia útil, exatamente uma das pessoas atribuídas à tarde é marcada como
+EA, trabalhando das 14:00 às 22:00. Ao sábado e ao domingo não existe EA.
+
+\textbf{Questão para validação:} \validar{} --- esta regra também se aplica a
+feriados em dias úteis e a todos os períodos do ano?
+
+\subsection{Férias e indisponibilidade}
+
+Um técnico não pode ser escalado numa data registada como férias ou
+indisponibilidade. Atualmente, férias e indisponibilidades são representadas da
+mesma forma no modelo.
+
+\textbf{Questões para validação:}
+\begin{itemize}
+    \item \validar{} --- é necessário distinguir férias, baixa, formação e outras ausências?
+    \item \validar{} --- existem indisponibilidades parciais que impeçam apenas alguns turnos?
+\end{itemize}
+
+\subsection{Elegibilidade individual para turnos}
+
+As seguintes regras encontram-se diretamente codificadas:
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\textwidth}
+                  >{\raggedright\arraybackslash}p{0.66\textwidth}}
+\toprule
+\textbf{Técnico} & \textbf{Turnos permitidos atualmente} \\
+\midrule
+\endhead
+Celia L & Apenas manhã, em qualquer dia da semana. \\
+Fernanda & Manhã ou tarde, em qualquer dia da semana; não realiza noites. \\
+Sandra & Manhã ou tarde, em qualquer dia da semana; não realiza noites. \\
+Celso & Manhã ou tarde, apenas de segunda a sexta-feira. \\
+Angelo & Apenas manhã, de segunda a sexta-feira. \\
+Nuno & Apenas manhã, de segunda a sexta-feira. \\
+Telmo, Anabela, Raquel B, Rosa R, Pedro, Lina, Hugo, Richard, Vanessa, Raquel M e Novo C
+& Manhã, tarde ou noite, em qualquer dia da semana. \\
+\bottomrule
+\end{longtable}
+
+\textbf{Questão para validação:} \validar{} --- estas limitações refletem
+qualificações, contratos, condições temporárias ou preferências? Deve ser
+registada a respetiva justificação e data de validade?
+
+\subsection{Limite semanal de horas}
+
+Cada técnico pode trabalhar, no máximo, 40 horas por semana ISO (segunda-feira
+a domingo), ou seja, no máximo cinco turnos de oito horas. Nas semanas que
+começam ou terminam fora do mês, o modelo apenas conhece os dias pertencentes ao
+mês que está a planear, salvo informação adicional sobre a escala anterior.
+
+\textbf{Questões para validação:}
+\begin{itemize}
+    \item \validar{} --- o limite correto é 40 horas para todos os técnicos?
+    \item \validar{} --- o limite deve considerar semanas móveis, médias de várias semanas ou trabalho realizado no mês anterior?
+\end{itemize}
+
+\subsection{Limite mensal para contratos de 35 ou 40 horas}
+
+Cada técnico tem agora uma carga semanal configurável de 35 ou 40 horas. O
+limite mensal é proporcional ao número de dias do mês e arredondado por defeito
+para turnos completos de oito horas. Subtraem-se depois as horas de descanso
+transitadas. Para um contrato de 35 horas, este cálculo introduz aproximadamente
+uma folga adicional por cada oito turnos relativamente a um ciclo de 40 horas.
+
+\textbf{Assunção provisória:} todos os técnicos foram configurados com 35 horas,
+por ainda não estar disponível a carga individual. \validar{} --- indicar quem
+tem contrato de 35 horas e quem tem contrato de 40 horas, e confirmar a regra de
+arredondamento e transporte entre meses.
+
+\subsection{Descanso entre tarde e manhã}
+
+Um turno normal da tarde (16:00--00:00) não pode ser seguido por um turno da
+manhã no dia seguinte. A combinação EA (14:00--22:00) seguida de manhã é
+permitida.
+
+\textbf{Questão para validação:} \validar{} --- o intervalo EA--M é aceite pelas
+regras legais e internas aplicáveis?
+
+\subsection{Máximo de tardes consecutivas}
+
+\textbf{Nova regra confirmada pela equipa hospitalar:} nenhum técnico pode
+realizar mais de três turnos de tarde consecutivos (turno normal ou EA, em
+qualquer combinação). Este limite de três é obrigatório; o objetivo preferido
+é não passar de duas tardes seguidas, tratado como preferência na secção
+seguinte.
+
+\subsection{Descanso após turno noturno}
+
+Depois de um turno N, o técnico não pode realizar qualquer turno no dia civil
+seguinte.
+
+Se for fornecida a escala do mês anterior, um turno N no último dia desse mês
+impede trabalho no primeiro dia do novo mês. Um turno A no último dia do mês
+anterior impede apenas M no primeiro dia; um EA anterior ainda não é tratado de
+forma distinta nesta fronteira.
+
+\textbf{Questões para validação:}
+\begin{itemize}
+    \item \validar{} --- um dia completo sem trabalho é o descanso correto após uma noite?
+    \item \validar{} --- devem ser verificadas horas exatas de descanso em vez de dias civis?
+    \item \validar{} --- que regras devem ser aplicadas entre o último dia do mês planeado e o mês seguinte?
+\end{itemize}
+
+\subsection{Espaçamento entre noites}
+
+Para o mesmo técnico, os inícios de dois turnos noturnos devem ficar separados
+por pelo menos seis dias de calendário. Assim, uma noite no dia 1 impede outra
+noite nos dias 2 a 6, sendo novamente possível no dia 7.
+
+\textbf{Questão para validação:} \validar{} --- este intervalo é o utilizado na prática?
+
+\subsection{Distribuição obrigatória das noites}
+
+O número mínimo de noites do mês é dividido pelo número de técnicos elegíveis
+para noites. Cada técnico elegível deve receber um número de noites entre o
+arredondamento por defeito e o arredondamento por excesso dessa média. Para 31
+noites e 11 técnicos elegíveis, cada um recebe obrigatoriamente duas ou três
+noites.
+
+Esta regra trata a distribuição das noites como uma restrição obrigatória, e não
+apenas como uma preferência. Pode causar inviabilidade quando um técnico está
+muito tempo indisponível.
+
+\textbf{Questão para validação prioritária:} \validar{} --- a igualdade das
+noites deve ser obrigatória ou apenas otimizada, tendo em conta férias,
+contratos, qualificações e preferências?
+
+\subsection{Regra especial de cobertura por Lina}
+
+Quando Angelo ou Nuno estão sem trabalhar, Lina deve realizar o turno da manhã,
+exceto quando Lina está de férias. Na implementação atual, esta regra também se
+aplica aos fins de semana. Como Angelo e Nuno só podem trabalhar manhãs em dias
+úteis, Lina é forçada a trabalhar de manhã ao sábado e ao domingo, salvo férias.
+
+\textbf{Questão para validação prioritária:} \validar{} --- esta regra está
+correta? Deve aplicar-se apenas em dias úteis, apenas em determinadas funções ou
+apenas quando ambos estão ausentes?
+
+\subsection{Prevenção de Angelo e Nuno}
+
+Em cada dia do calendário existe exatamente uma prevenção, realizada por Angelo
+ou Nuno. A prevenção é independente do turno normal, pelo que pode surgir na
+escala como P ou combinada com a manhã como M/P.
+
+\textbf{Horário confirmado pela equipa hospitalar:} a prevenção decorre das
+16:00 às 08:00 do dia seguinte nos dias úteis, e das 08:00 às 08:00 do dia
+seguinte (24 horas) ao sábado e ao domingo. O modelo não contabiliza estas
+horas de prevenção como horas de turno; a prevenção é apenas registada por dia
+civil.
+
+\textbf{Atualização confirmada pela equipa hospitalar:} de segunda a
+quinta-feira, a pessoa de prevenção alterna obrigatoriamente todo os dias. De
+sexta a domingo, a prevenção passou a ser tratada como um único bloco rotativo
+de três dias: a mesma pessoa assegura sexta, sábado e domingo, e essa
+responsabilidade roda entre Angelo e Nuno de fim de semana para fim de semana.
+Nas fronteiras do bloco (quinta para sexta e domingo para a segunda seguinte) a
+pessoa de prevenção continua obrigatoriamente a mudar. Esta correção substitui a
+versão anterior do modelo, que alternava a prevenção todos os dias sem
+distinguir o fim de semana.
+
+Uma prevenção realizada ao domingo ou num feriado gera uma folga compensatória
+distinta, identificada por FC num dia útil sem turno regular. A implementação
+valida que todas essas prevenções têm uma FC associada e que a folga não coincide
+com férias nem com trabalho regular.
+
+\textbf{Questão para validação:} \validar{} --- quando um feriado cai de
+segunda a quinta-feira, deve manter-se a alternância diária ou deve juntar-se
+ao bloco rotativo do fim de semana mais próximo?
+
+\section{Preferências atualmente otimizadas}
+
+As regras desta secção podem ser violadas quando necessário. Cada violação tem
+um custo e o sistema procura minimizar a soma ponderada desses custos.
+
+\subsection{Equilíbrio da carga de trabalho}
+
+O objetivo principal aproxima as horas de cada técnico de uma quota proporcional
+aos seus dias disponíveis. A disponibilidade é atualmente o número de dias em
+que a pessoa não está de férias e pode realizar pelo menos um tipo de turno.
+
+Este cálculo não utiliza ainda horas contratuais individuais, percentagem de
+tempo, qualificações por serviço nem preferências declaradas.
+
+\subsection{Ciclo de trabalho e agrupamento das folgas}
+
+O modelo procura evitar mais de cinco dias consecutivos de trabalho, aproximando
+o ciclo habitual de cinco turnos e duas folgas. A regra anterior, que penalizava
+mais de duas folgas seguidas, foi removida. O sistema penaliza agora uma única
+folga entre dois dias de trabalho e também um único turno entre duas folgas.
+Assim, favorece blocos de duas ou mais folgas e evita turnos isolados.
+
+As férias interrompem a avaliação destes padrões. \validar{} --- confirmar se o
+limite de cinco dias deve ser obrigatório ou preferencial e como tratar padrões
+que atravessam a fronteira entre meses.
+
+\subsection{Preferência por, no máximo, duas tardes seguidas}
+
+\textbf{Nova regra confirmada pela equipa hospitalar:} o sistema penaliza um
+terceiro turno de tarde consecutivo (turno normal ou EA). Duas tardes seguidas
+não têm penalização; a partir da terceira, aplica-se o custo desta preferência.
+O limite absoluto de três tardes seguidas mantém-se obrigatório, conforme
+descrito na secção de restrições obrigatórias.
+
+\subsection{Sequência de turnos antes de uma noite}
+
+\textbf{Nova regra confirmada pela equipa hospitalar:} o sistema prefere que,
+antes de um turno da noite, os três dias anteriores sigam uma de duas
+sequências: tarde normal, tarde antecipada (EA) e manhã (T, T14, M); ou tarde
+normal, tarde normal e folga (T, T, D). Quando nenhuma das duas sequências é
+possível ou escolhida, aplica-se uma penalização. Esta regra é apenas uma
+preferência --- pode ser violada quando necessário para garantir cobertura ou
+por outras restrições.
+
+\textbf{Questão para validação:} \validar{} --- estas são as duas únicas
+sequências aceitáveis antes de uma noite, incluindo casos junto à fronteira do
+mês (quando os três dias anteriores não estão todos no mês planeado)?
+
+\subsection{Prevenção preferencialmente fora dos dias de folga}
+
+\textbf{Nova regra confirmada pela equipa hospitalar:} sempre que possível, o
+sistema evita atribuir prevenção a Angelo ou Nuno num dia em que, de outro
+modo, ficariam de folga (sem turno regular). Como a alternância diária e o
+bloco rotativo de fim de semana já determinam, quase sempre, quem está de
+prevenção em cada dia, esta preferência atua principalmente sobre a decisão de
+colocar essa pessoa a trabalhar de manhã (M) nesse dia, em vez de lhe dar
+folga, quando a cobertura o permite. A prevenção em dias de férias mantém-se
+proibida, como restrição obrigatória.
+
+\subsection{Igualdade de dias trabalhados entre meses}
+
+O sistema minimiza, com prioridade elevada, a diferença entre os dias acumulados
+de trabalho de todos os técnicos. Se a igualdade não for possível num mês, o
+resultado é guardado e usado no mês seguinte, favorecendo quem ficou com menos
+dias. Para maio de 2025, sem histórico anterior, a diferença mínima é um dia
+porque são necessárias 305 atribuições para 17 técnicos.
+
+\textbf{Atualização confirmada pela equipa hospitalar:} o objetivo é terminar
+cada ano civil com o mesmo número de horas para todos os técnicos. Por isso, o
+transporte da diferença acumulada de dias trabalhados entre meses é agora
+reiniciado a zero em janeiro de cada ano, em vez de se acumular indefinidamente
+ao longo de vários anos.
+
+\subsection{Rotação de feriados e datas especiais}
+
+O trabalho em feriados é equilibrado usando o histórico acumulado. Natal, Ano
+Novo e domingo de Páscoa possuem contagens históricas separadas, para que a
+rotação de cada data especial seja feita entre anos. Em maio de 2025 foi
+registado o dia 1 de maio; os históricos anteriores foram inicializados a zero.
+
+\subsection{Equilíbrio dos fins de semana}
+
+Um fim de semana é contado como trabalhado se o técnico trabalhar no sábado,
+no domingo ou em ambos. O modelo procura aproximar a razão
+
+\[
+\frac{\text{fins de semana trabalhados}}
+     {\text{fins de semana em que poderia trabalhar}}
+\]
+
+entre os técnicos elegíveis.
+
+\subsection{Fins de semana consecutivos}
+
+Trabalhar em dois fins de semana consecutivos gera uma penalização, mas continua
+a ser permitido quando necessário para garantir cobertura.
+
+\subsection{Fim de semana incompleto}
+
+Trabalhar apenas no sábado ou apenas no domingo gera uma penalização. O modelo
+prefere, quando possível, que uma pessoa trabalhe os dois dias ou nenhum deles.
+
+\subsection{Fins de semana próximos de férias}
+
+O modelo penaliza trabalho em fins de semana associados a períodos de férias.
+Para cada dia de férias, são considerados o fim de semana imediatamente anterior,
+o fim de semana associado à mesma semana e o fim de semana imediatamente
+seguinte. A união destes períodos pode abranger vários fins de semana quando as
+férias são longas.
+
+\textbf{Questão para validação:} \validar{} --- qual é exatamente o período de
+proteção desejado antes e depois das férias?
+
+\subsection{Estabilidade após alterações}
+
+Quando uma escala já publicada precisa de ser reparada devido a uma ausência ou
+aumento da procura, o modelo penaliza cada atribuição removida ou acrescentada.
+Nesta modalidade, preservar a escala original recebe um peso elevado. São
+distinguidos M, A, EA e N.
+
+\section{Pesos utilizados na escala normal}
+
+Na configuração normal atual, os componentes da função objetivo têm os pesos
+seguintes:
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+\textbf{Componente} & \textbf{Peso} \\
+\midrule
+Diferença acumulada de dias trabalhados & 100,000 \\
+Desvio máximo da carga proporcional & 100 \\
+Mais de cinco dias consecutivos de trabalho & 500 \\
+Turno isolado entre folgas & 300 \\
+Folga isolada entre turnos & 200 \\
+Terceira tarde consecutiva & 400 \\
+Sequência de turnos antes de uma noite não seguida & 150 \\
+Prevenção coincidente com dia de folga & 250 \\
+Rotação de feriados & 1000 \\
+Rotação de Natal, Ano Novo e Páscoa & 2000 \\
+Desequilíbrio normalizado de fins de semana & 30 \\
+Fins de semana consecutivos & 20 \\
+Fim de semana incompleto & 10 \\
+Fim de semana próximo de férias & 5 \\
+Alterações à escala publicada & 0 na criação inicial; 100,000 na reparação \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Estes pesos implementam uma soma ponderada, não uma hierarquia matemática
+estritamente lexicográfica. Uma melhoria grande num componente pode compensar
+várias pequenas perdas noutro.
+
+\textbf{Questão para validação:} \validar{} --- qual deve ser a ordem de
+prioridade entre equilíbrio de horas, descanso, noites, fins de semana,
+preferências pessoais e estabilidade da escala?
+
+\section{Aspetos ainda não representados}
+
+Os seguintes elementos referidos ou sugeridos no projeto ainda não estão
+representados de forma completa no modelo:
+
+\begin{itemize}
+    \item confirmação das cargas contratuais individuais de 35 ou 40 horas;
+    \item qualificações por modalidade, equipamento, sala ou função clínica;
+    \item níveis mínimos de experiência por turno;
+    \item preferências declaradas individualmente pelos técnicos;
+    \item pedidos de folga com diferentes níveis de prioridade;
+    \item calendário completo dos feriados locais e nacionais;
+    \item baixas, formação e outros tipos de ausência distintos de férias;
+    \item horas extraordinárias, custos ou compensações;
+    \item composição das equipas por grupo operacional;
+    \item regras completas na fronteira entre meses;
+    \item alterações temporárias de elegibilidade;
+    \item validação jurídica e institucional formal de cada regra.
+\end{itemize}
+
+\section{Tabela de validação pela equipa hospitalar}
+
+Solicita-se que cada regra seja classificada como correta, incorreta ou
+incompleta. As correções podem ser registadas na última coluna.
+
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.27\textwidth}
+                  >{\centering\arraybackslash}p{0.10\textwidth}
+                  >{\centering\arraybackslash}p{0.11\textwidth}
+                  >{\centering\arraybackslash}p{0.12\textwidth}
+                  >{\raggedright\arraybackslash}p{0.20\textwidth}}
+\toprule
+\textbf{Regra} & \textbf{Correta} & \textbf{Incorreta} & \textbf{Incompleta} & \textbf{\shortstack{Correção/\\observação}} \\
+\midrule
+\endhead
+Um turno por técnico e por dia & $\square$ & $\square$ & $\square$ & \\
+Cobertura em dias úteis: 7 M, 3 A, 1 N & $\square$ & $\square$ & $\square$ & \\
+Cobertura ao fim de semana: 3 M, 3 A, 1 N & $\square$ & $\square$ & $\square$ & \\
+Um EA por dia útil & $\square$ & $\square$ & $\square$ & \\
+Elegibilidade individual & $\square$ & $\square$ & $\square$ & \\
+Máximo de 40 horas por semana & $\square$ & $\square$ & $\square$ & \\
+Fórmula do limite mensal & $\square$ & $\square$ & $\square$ & \\
+Descanso A--M e EA--M & $\square$ & $\square$ & $\square$ & \\
+Dia sem trabalho após N & $\square$ & $\square$ & $\square$ & \\
+Seis dias entre inícios de noites & $\square$ & $\square$ & $\square$ & \\
+Duas ou três noites por técnico elegível & $\square$ & $\square$ & $\square$ & \\
+Máximo de três tardes seguidas (preferência até duas) & $\square$ & $\square$ & $\square$ & \\
+Sequência T/T14/M ou T/T/D antes de uma noite & $\square$ & $\square$ & $\square$ & \\
+Horário da prevenção (16--08 / 08--08 fim de semana) & $\square$ & $\square$ & $\square$ & \\
+Prevenção preferencialmente fora dos dias de folga & $\square$ & $\square$ & $\square$ & \\
+Regra de Lina, Angelo e Nuno & $\square$ & $\square$ & $\square$ & \\
+Prevenção: bloco rotativo sexta--domingo & $\square$ & $\square$ & $\square$ & \\
+Igualdade de horas com reinício anual em janeiro & $\square$ & $\square$ & $\square$ & \\
+Ciclo de cinco turnos e duas folgas & $\square$ & $\square$ & $\square$ & \\
+Folgas agrupadas e ausência de turno isolado & $\square$ & $\square$ & $\square$ & \\
+Compensação de dias no mês seguinte & $\square$ & $\square$ & $\square$ & \\
+Rotação de feriados e datas especiais & $\square$ & $\square$ & $\square$ & \\
+Equilíbrio e continuidade dos fins de semana & $\square$ & $\square$ & $\square$ & \\
+Proteção de fins de semana junto às férias & $\square$ & $\square$ & $\square$ & \\
+Prioridade dos objetivos & $\square$ & $\square$ & $\square$ & \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Confirmação}
+
+Nome e função: \hrulefill
+
+Data: \hrulefill
+
+Observações gerais:
+
+\vspace{3cm}
+\hrulefill
+
+\vspace{1.2cm}
+\hrulefill
+
+\end{document}

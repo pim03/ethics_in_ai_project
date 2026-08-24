@@ -1,0 +1,162 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[margin=1.8cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\newcommand{\validar}{\textcolor{blue!70!black}{\textbf{A validar}}}
+
+\title{Escalas dos Técnicos de Radiologia\\
+Resumo das Restrições para Validação}
+\author{Projeto de apoio à decisão para elaboração de escalas}
+\date{Versão de \today}
+
+\begin{document}
+\maketitle
+
+Este resumo apresenta as regras atualmente implementadas no protótipo. Não
+constitui validação jurídica ou institucional. Pretende apoiar a revisão pela
+equipa do Hospital da Covilhã.
+
+\section*{Turnos}
+
+\begin{center}
+\begin{tabular}{cll}
+\toprule
+\textbf{Código} & \textbf{Horário} & \textbf{Descrição} \\
+\midrule
+M  & 08:00--16:00 & Manhã \\
+A  & 16:00--00:00 & Tarde normal \\
+EA & 14:00--22:00 & Tarde antecipada \\
+N  & 00:00--08:00 & Noite \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Todos os turnos contam como oito horas.
+
+\section*{Regras obrigatórias}
+
+\begin{enumerate}
+    \item Cada técnico realiza, no máximo, um turno por dia.
+    \item Técnicos em férias ou indisponíveis não podem ser escalados.
+    \item Cobertura mínima de segunda a sexta-feira: 7 M, 3 A/EA e 1 N.
+    \item Cobertura mínima ao sábado e domingo: 3 M, 3 A e 1 N.
+    \item Em cada dia útil, exatamente uma pessoa da tarde realiza EA.
+    \item Cada técnico só pode realizar os turnos para os quais está elegível.
+    \item Limite máximo de 40 horas por semana ISO.
+    \item Limite mensal proporcional ao contrato individual de 35 ou 40 horas,
+          arredondado para turnos completos e ajustado pelas horas transitadas.
+    \item A não pode ser seguido de M no dia seguinte; EA pode ser seguido de M.
+    \item Depois de N, o técnico não trabalha no dia seguinte.
+    \item Dois turnos N do mesmo técnico devem iniciar-se com pelo menos seis dias
+          de intervalo.
+    \item Cada técnico elegível recebe obrigatoriamente um número de noites entre
+          a média arredondada por defeito e por excesso. Em maio de 2025: 2 ou 3 noites.
+    \item Quando Angelo ou Nuno estão sem trabalhar, Lina deve realizar M, salvo
+          férias de Lina. Atualmente esta regra também se aplica aos fins de semana.
+    \item Angelo e Nuno alternam a prevenção diariamente: existe exatamente um P
+          por dia, que pode coexistir com M e é então apresentado como M/P.
+    \item Cada prevenção ao domingo ou feriado gera uma folga compensatória FC,
+          colocada num dia útil sem férias nem turno regular.
+\end{enumerate}
+
+\section*{Elegibilidade individual atual}
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.27\textwidth}
+                >{\raggedright\arraybackslash}p{0.62\textwidth}}
+\toprule
+\textbf{Técnico} & \textbf{Turnos permitidos} \\
+\midrule
+Celia L & Apenas M. \\
+Fernanda e Sandra & M ou A/EA; sem noites. \\
+Celso & M ou A/EA, apenas em dias úteis. \\
+Angelo e Nuno & Apenas M em dias úteis. \\
+Restantes técnicos & M, A/EA ou N, em qualquer dia. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Preferências otimizadas}
+
+Estas regras podem ser violadas quando necessário, mas o sistema tenta:
+
+\begin{itemize}
+    \item equilibrar as horas relativamente aos dias disponíveis;
+    \item evitar mais de cinco dias consecutivos de trabalho;
+    \item juntar duas ou mais folgas e evitar uma folga isolada entre turnos;
+    \item evitar um único turno entre dois dias de folga;
+    \item igualar os dias acumulados de trabalho, compensando diferenças no mês seguinte;
+    \item rodar feriados, Natal, Ano Novo e Páscoa com base no histórico;
+    \item equilibrar os fins de semana relativamente às oportunidades de cada técnico;
+    \item evitar fins de semana consecutivos;
+    \item evitar trabalhar apenas sábado ou apenas domingo;
+    \item evitar fins de semana próximos de férias;
+    \item minimizar alterações quando uma escala publicada precisa de ser reparada.
+\end{itemize}
+
+\section*{Pontos prioritários para decisão}
+
+\begin{itemize}
+    \item \validar{} --- coberturas mínimas e tratamento dos feriados.
+    \item \validar{} --- elegibilidade e respetiva justificação para cada técnico.
+    \item \validar{} --- fórmula das horas mensais e horas contratuais individuais.
+    \item \validar{} --- descanso A--M, EA--M e após N.
+    \item \validar{} --- intervalo mínimo entre noites.
+    \item \validar{} --- distribuição obrigatória de 2 ou 3 noites.
+    \item \validar{} --- regra de Lina, Angelo e Nuno, sobretudo ao fim de semana.
+    \item \validar{} --- ciclo de cinco turnos, duas folgas e tratamento das folgas adicionais.
+    \item \validar{} --- histórico anterior de dias trabalhados e de feriados.
+    \item \validar{} --- proteção de fins de semana antes e depois de férias.
+    \item \validar{} --- prioridades entre carga horária, noites, fins de semana,
+          preferências pessoais e estabilidade da escala.
+\end{itemize}
+
+\section*{Elementos ainda não modelados}
+
+Confirmação das horas contratuais individuais; regimes de tempo parcial; qualificações por
+modalidade ou função; níveis de experiência; preferências individuais; pedidos
+de folga prioritários; regras de feriados; tipos distintos de ausência; horas
+extraordinárias; composição mínima das equipas; e regras completas entre meses.
+
+\section*{Registo da validação}
+
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.42\textwidth}cccc}
+\toprule
+\textbf{Área} & \textbf{Correta} & \textbf{Alterar} & \textbf{Discutir} & \textbf{N/A} \\
+\midrule
+Turnos e horários & $\square$ & $\square$ & $\square$ & $\square$ \\
+Cobertura mínima & $\square$ & $\square$ & $\square$ & $\square$ \\
+Elegibilidade individual & $\square$ & $\square$ & $\square$ & $\square$ \\
+Limites de horas & $\square$ & $\square$ & $\square$ & $\square$ \\
+Descanso e noites & $\square$ & $\square$ & $\square$ & $\square$ \\
+Regra de Lina, Angelo e Nuno & $\square$ & $\square$ & $\square$ & $\square$ \\
+Fins de semana e férias & $\square$ & $\square$ & $\square$ & $\square$ \\
+Prioridade dos objetivos & $\square$ & $\square$ & $\square$ & $\square$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\normalsize
+
+Nome e função: \hrulefill \hfill Data: \hrulefill
+
+\vspace{0.6cm}
+Observações: \hrulefill
+
+\vspace{0.8cm}
+\hrulefill
+
+\end{document}

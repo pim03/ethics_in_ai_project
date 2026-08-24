@@ -1,0 +1,11 @@
+{
+  "name": "single_day_absence",
+  "description": "Ana Catarina becomes unavailable on 2026-09-16.",
+  "unavailable": [
+    [
+      "Ana Catarina",
+      "2026-09-16"
+    ]
+  ],
+  "demand": []
+}

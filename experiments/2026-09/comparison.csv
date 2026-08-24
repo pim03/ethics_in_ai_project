@@ -1,0 +1,6 @@
+profile,status,solve_seconds,objective,best_bound,workload_gini,normalized_workload_gini,normalized_workload_jain,night_gini,weekend_gini,weekend_jain,preference_cost,penalty_workday_balance,penalty_workload_imbalance,penalty_excess_work_streak,penalty_isolated_work_day,penalty_isolated_rest_day,penalty_excess_afternoon_streak,penalty_night_ramp_mismatch,penalty_holiday_rotation,penalty_special_holiday_rotation,penalty_weekend_imbalance,penalty_consecutive_weekends,penalty_split_weekend,penalty_vacation_adjacent_weekend,penalty_schedule_changes,penalty_morning_shortfall_key_day,penalty_morning_shortfall_other_day,penalty_monthly_overtime
+operational_baseline,OPTIMAL,6.6873,60825.0,60825.0,0.1549,0.1294,0.9243,0.1757,0.1298,0.9322,553,21,41504,12,22,66,0,0,0,0,16,24,38,13,0,0,5,336
+workload_focused,FEASIBLE,30.0279,43047214.0,43046745.0,0.0942,0.164,0.9074,0.1907,0.1839,0.9016,304,15,41504,2,54,70,0,0,0,0,9,13,20,12,0,0,81,28
+weekend_focused,FEASIBLE,30.0158,5700280.0,5697290.0,0.0942,0.164,0.9074,0.1757,0.1188,0.9412,282,15,41504,7,56,61,0,6,0,0,2,4,10,12,0,0,81,28
+preference_focused,FEASIBLE,30.02,5751450.0,5732400.0,0.0942,0.164,0.9074,0.1613,0.2438,0.8398,284,15,41504,1,38,59,1,19,0,0,9,10,12,11,0,0,81,28
+balanced,FEASIBLE,30.0256,5720205.0,5712065.0,0.0942,0.164,0.9074,0.1757,0.1768,0.9033,289,15,41504,0,41,65,0,13,0,0,9,8,16,13,0,0,81,28

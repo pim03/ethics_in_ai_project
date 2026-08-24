@@ -1,0 +1,56 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\title{Fair and Constraint-Aware Radiology Shift Scheduling:\
+A Computational Perspective on Fairness, Robustness and Explainability}
+\author{Joana Pimenta}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\begin{tabular}{rl}
+Name: & Joana \\
+Surname: & Pimenta \\
+University email: & \href{mailto:joana.monteiro@studio.unibo.it}{joana.monteiro@studio.unibo.it} \\
+Matricola: & \textbf{1168774} \\
+\end{tabular}
+\end{center}
+
+\section*{Abstract}
+
+This project investigates the design and evaluation of an AI-based decision-support system for the monthly scheduling of radiology technicians at the Hospital of Covilh\~a, Portugal, where schedules are currently prepared manually. The task will be formalised as a constraint-based optimisation problem in which operational requirements, working-time rules, staff availability and preferences are represented explicitly. Rather than focusing only on finding an optimal schedule, the project will study three requirements of Trustworthy AI. Fairness will be examined through quantitative measures of workload and undesirable-shift distribution, together with trade-offs between equity, operational efficiency and preference satisfaction. Technical robustness and safety will be evaluated under perturbations such as last-minute unavailability and demand changes, measuring feasibility, solution quality and schedule stability. Explainability will be addressed through transparent accounts of the constraints and objectives behind assignments, complemented by local and counterfactual explanations. The intended result is an auditable assistant that supports, rather than replaces, human scheduling decisions.
+
+\section*{Description}
+
+This project is inspired by the project idea proposed in the Ethics in Artificial Intelligence course, \emph{``Fair and Constraint-Aware Pharmacy Shift Scheduling: A Computational Perspective on Fairness, Robustness and Explainability.''} It adapts that proposal from pharmacy scheduling to a real-world case involving the radiology technicians at the Hospital of Covilh\~a in Portugal. The principal goal is to develop a computational case study, in collaboration with the hospital staff, showing how ethical requirements can be translated into explicit properties of a decision-support system. The existing manual scheduling process will provide the basis for identifying staffing needs, shift types, working-time constraints, availability conditions and current scheduling practices. A constraint-programming solver will generate feasible schedules while separating non-negotiable legal or operational requirements from weighted preferences and fairness objectives. 
+
+The fairness analysis will examine equality and equity at the level of individual technicians and, where suitable and ethically appropriate data are available, relevant operational groups. Workload, night shifts, weekends and other undesirable duties will be evaluated both as raw allocations and relative to eligibility, availability, contractual capacity and expressed preferences. Distributional measures such as variance, the Gini coefficient and Jain's fairness index will be used as scheduling-specific indicators. These will be related to the course concepts of individual fairness, group fairness, statistical parity and disparate impact where the available data make those notions applicable. Multiple objective configurations will be compared to make trade-offs explicit rather than presenting fairness as a single universally optimal quantity.
+
+Robustness will be assessed through controlled scenarios involving unexpected absences, changes in required staffing and restricted shift eligibility. The evaluation will measure whether a new feasible schedule can be produced, how much its objective values deteriorate and how many existing assignments must change. This provides evidence about resilience and the cost imposed on workers by rescheduling.
+
+Explainability will exploit the transparent structure of the constraint model. Global explanations will describe the scheduling rules, objective terms, weights, limitations and solver guarantees. Local explanations will identify the constraints and objectives relevant to a particular assignment. Counterfactual explanations will describe what would need to change for a worker to receive a different shift or day off. These explanations will be designed for human review.
+
+\subsection*{Expected Deliverables}
+
+\begin{itemize}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parskip}{0pt}
+    \item A documented constraint-based scheduling model for the radiology technicians at the Hospital of Covilh\~a  and a reproducible implementation.
+    \item A fairness evaluation containing worker-level metrics, relevant group comparisons and fairness--efficiency trade-off experiments.
+    \item A robustness test suite and report covering input perturbations, feasibility, quality degradation and schedule stability.
+    \item Global, local and counterfactual explanations for scheduling decisions, together with representative examples.
+    \item A final report discussing assumptions, experimental results, limitations, human oversight and the relationship between the implementation and Trustworthy AI principles.
+\end{itemize}
+
+\end{document}
