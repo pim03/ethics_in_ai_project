@@ -1,8 +1,8 @@
 {
   "status": "OPTIMAL",
-  "objective": 24109210.0,
-  "best_bound": 24109210.0,
-  "solve_seconds": 0.4727,
+  "objective": 34594120.0,
+  "best_bound": 34594120.0,
+  "solve_seconds": 0.3484,
   "weights": {
     "workday_balance": 100000,
     "workload_imbalance": 1000,
@@ -25,56 +25,56 @@
   },
   "objective_components": {
     "workday_balance": 21,
-    "workload_imbalance": 9072,
+    "workload_imbalance": 11256,
     "excess_work_streak": 0,
-    "isolated_work_day": 2,
-    "isolated_rest_day": 40,
-    "excess_afternoon_streak": 0,
-    "night_ramp_mismatch": 10,
+    "isolated_work_day": 6,
+    "isolated_rest_day": 29,
+    "excess_afternoon_streak": 1,
+    "night_ramp_mismatch": 7,
     "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
     "weekend_imbalance": 12,
-    "consecutive_weekends": 23,
-    "split_weekend": 23,
+    "consecutive_weekends": 21,
+    "split_weekend": 18,
     "vacation_adjacent_weekend": 12,
-    "schedule_changes": 29,
-    "morning_shortfall_key_day": 1,
-    "morning_shortfall_other_day": 19,
-    "monthly_overtime": 330
+    "schedule_changes": 12,
+    "morning_shortfall_key_day": 2,
+    "morning_shortfall_other_day": 23,
+    "monthly_overtime": 331
   },
   "weighted_objective_components": {
     "workday_balance": 2100000,
-    "workload_imbalance": 9072000,
+    "workload_imbalance": 11256000,
     "excess_work_streak": 0,
-    "isolated_work_day": 600,
-    "isolated_rest_day": 8000,
-    "excess_afternoon_streak": 0,
-    "night_ramp_mismatch": 1500,
+    "isolated_work_day": 1800,
+    "isolated_rest_day": 5800,
+    "excess_afternoon_streak": 400,
+    "night_ramp_mismatch": 1050,
     "night_after_vacation": 0,
     "holiday_rotation": 0,
     "special_holiday_rotation": 0,
     "weekend_imbalance": 360,
-    "consecutive_weekends": 460,
-    "split_weekend": 230,
+    "consecutive_weekends": 420,
+    "split_weekend": 180,
     "vacation_adjacent_weekend": 60,
-    "schedule_changes": 2900000,
-    "morning_shortfall_key_day": 10000000,
-    "morning_shortfall_other_day": 9500,
-    "monthly_overtime": 16500
+    "schedule_changes": 1200000,
+    "morning_shortfall_key_day": 20000000,
+    "morning_shortfall_other_day": 11500,
+    "monthly_overtime": 16550
   },
   "worked_days": {
     "Celia L": 17,
-    "Telmo": 20,
+    "Telmo": 21,
     "Anabela": 13,
     "Fernanda": 20,
     "Raquel B": 13,
     "Rosa R": 21,
-    "Sandra": 20,
+    "Sandra": 21,
     "Pedro": 21,
-    "Lina": 18,
-    "Hugo": 20,
-    "Celso": 18,
+    "Lina": 8,
+    "Hugo": 21,
+    "Celso": 17,
     "Richard": 21,
     "Leonardo": 21,
     "Raquel M": 21,
@@ -88,9 +88,14 @@
   },
   "morning_understaffed_days": [
     {
+      "date": "2026-09-01",
+      "weekday": "Tuesday",
+      "short_by": 4
+    },
+    {
       "date": "2026-09-03",
       "weekday": "Thursday",
-      "short_by": 1
+      "short_by": 2
     },
     {
       "date": "2026-09-08",
@@ -108,6 +113,11 @@
       "short_by": 4
     },
     {
+      "date": "2026-09-11",
+      "weekday": "Friday",
+      "short_by": 1
+    },
+    {
       "date": "2026-09-15",
       "weekday": "Tuesday",
       "short_by": 4
@@ -120,23 +130,13 @@
     {
       "date": "2026-09-22",
       "weekday": "Tuesday",
-      "short_by": 1
-    },
-    {
-      "date": "2026-09-24",
-      "weekday": "Thursday",
-      "short_by": 1
-    },
-    {
-      "date": "2026-09-29",
-      "weekday": "Tuesday",
-      "short_by": 1
+      "short_by": 2
     }
   ],
   "monthly_overtime_used": [
     {
       "person": "Telmo",
-      "extra_hours": 24
+      "extra_hours": 29
     },
     {
       "person": "Fernanda",
@@ -148,7 +148,7 @@
     },
     {
       "person": "Sandra",
-      "extra_hours": 24
+      "extra_hours": 32
     },
     {
       "person": "Pedro",
@@ -156,15 +156,11 @@
     },
     {
       "person": "Lina",
-      "extra_hours": 24
+      "extra_hours": 28
     },
     {
       "person": "Hugo",
-      "extra_hours": 24
-    },
-    {
-      "person": "Celso",
-      "extra_hours": 24
+      "extra_hours": 32
     },
     {
       "person": "Richard",
@@ -191,16 +187,16 @@
     "through": "2026-09-30",
     "cumulative_workdays": {
       "Celia L": 17,
-      "Telmo": 20,
+      "Telmo": 21,
       "Anabela": 13,
       "Fernanda": 20,
       "Raquel B": 13,
       "Rosa R": 21,
-      "Sandra": 20,
+      "Sandra": 21,
       "Pedro": 21,
-      "Lina": 18,
-      "Hugo": 20,
-      "Celso": 18,
+      "Lina": 8,
+      "Hugo": 21,
+      "Celso": 17,
       "Richard": 21,
       "Leonardo": 21,
       "Raquel M": 21,

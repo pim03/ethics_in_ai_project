@@ -1,9 +1,9 @@
 {
   "name": "night_worker_absence",
-  "description": "Night worker Richard becomes unavailable on 2026-09-10.",
+  "description": "Night worker Leonardo becomes unavailable on 2026-09-10.",
   "unavailable": [
     [
-      "Richard",
+      "Leonardo",
       "2026-09-10"
     ]
   ],

@@ -79,24 +79,28 @@
     "morning_shortfall_other_day": 500,
     "monthly_overtime": 50
   },
-  "balanced": {
-    "workday_balance": 100000,
-    "workload_imbalance": 100,
-    "excess_work_streak": 500,
-    "isolated_work_day": 300,
-    "isolated_rest_day": 200,
-    "excess_afternoon_streak": 400,
-    "night_ramp_mismatch": 150,
-    "night_after_vacation": 1000,
-    "holiday_rotation": 1000,
-    "special_holiday_rotation": 2000,
-    "weekend_imbalance": 30,
-    "consecutive_weekends": 20,
-    "split_weekend": 10,
-    "vacation_adjacent_weekend": 5,
-    "schedule_changes": 0,
-    "morning_shortfall_key_day": 10000000,
-    "morning_shortfall_other_day": 500,
-    "monthly_overtime": 50
+  "published_schedule": {
+    "weights": {
+      "workday_balance": 100000,
+      "workload_imbalance": 100,
+      "excess_work_streak": 500,
+      "isolated_work_day": 300,
+      "isolated_rest_day": 200,
+      "excess_afternoon_streak": 400,
+      "night_ramp_mismatch": 150,
+      "night_after_vacation": 1000,
+      "holiday_rotation": 1000,
+      "special_holiday_rotation": 2000,
+      "weekend_imbalance": 30,
+      "consecutive_weekends": 20,
+      "split_weekend": 10,
+      "vacation_adjacent_weekend": 5,
+      "schedule_changes": 0,
+      "morning_shortfall_key_day": 10000000,
+      "morning_shortfall_other_day": 500,
+      "monthly_overtime": 50
+    },
+    "source_schedule": "reports/2026-09/schedule.csv",
+    "source_report": "reports/2026-09/solver_report.json"
   }
 }
