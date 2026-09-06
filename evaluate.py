@@ -8,7 +8,7 @@ import datetime as dt
 import json
 import math
 from pathlib import Path
-from statistics import fmean, pstdev
+from statistics import fmean, pstdev, pvariance
 from typing import Iterable
 
 from solver import NIGHT, PEOPLE, SHIFTS, allowed, load_department, month_days, weekend_id
@@ -36,13 +36,14 @@ def distribution(values: Iterable[float]) -> dict[str, float | int]:
     data = [float(value) for value in values]
     if not data:
         return {"count": 0, "mean": 0.0, "minimum": 0.0, "maximum": 0.0, "range": 0.0,
-                "standard_deviation": 0.0, "gini": 0.0, "jain_index": 1.0}
+                "variance": 0.0, "standard_deviation": 0.0, "gini": 0.0, "jain_index": 1.0}
     return {
         "count": len(data),
         "mean": round(fmean(data), 4),
         "minimum": round(min(data), 4),
         "maximum": round(max(data), 4),
         "range": round(max(data) - min(data), 4),
+        "variance": round(pvariance(data), 4),
         "standard_deviation": round(pstdev(data), 4),
         "gini": round(gini(data), 4),
         "jain_index": round(jain_index(data), 4),
@@ -64,7 +65,78 @@ def read_schedule(path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def evaluate(rows: list[dict[str, str]], vacations: dict[str, set[dt.date]]) -> dict:
+def linked_schedule_unavailability(path: Path | None, worker: str = "Lina") -> dict[str, set[dt.date]]:
+    """Return days committed to a linked department and unavailable here."""
+    if path is None:
+        return {}
+    rows = read_schedule(path)
+    return {
+        worker: {
+            dt.date.fromisoformat(row["date"])
+            for row in rows
+            if row["person"] == worker
+        }
+    }
+
+
+def load_worker_attributes(path: Path | None) -> dict[str, dict[str, str]]:
+    if path is None:
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise ValueError("Worker attributes must be a JSON object keyed by worker name")
+    return raw
+
+
+def load_overtime(path: Path | None) -> dict[str, int]:
+    if path is None:
+        return {}
+    report = json.loads(path.read_text(encoding="utf-8"))
+    return {row["person"]: int(row["extra_hours"])
+            for row in report.get("monthly_overtime_used", [])}
+
+
+def group_equity(workers: list[dict], attribute: str, minimum_group_size: int = 3) -> dict:
+    labels = sorted({worker.get(attribute) for worker in workers if worker.get(attribute)})
+    groups = {}
+    for label in labels:
+        members = [worker for worker in workers if worker.get(attribute) == label]
+        active = [worker for worker in members if worker["available_days"]]
+        night_eligible = [worker for worker in members if worker["night_opportunities"]]
+        weekend_eligible = [worker for worker in members if worker["weekend_opportunities"]]
+        overtime_recipients = [worker for worker in active if worker["overtime_hours"] > 0]
+        groups[label] = {
+            "workers": len(members),
+            "active_workers": len(active),
+            "small_group_warning": len(active) < minimum_group_size,
+            "assigned_hours_active_workers": distribution(worker["assigned_hours"] for worker in active),
+            "availability_normalized_workload": distribution(worker["workload_ratio"] for worker in active),
+            "night_shifts_eligible_workers": distribution(worker["night_shifts"] for worker in night_eligible),
+            "availability_normalized_night_burden": distribution(worker["night_burden"] for worker in night_eligible),
+            "weekends_eligible_workers": distribution(worker["weekends_worked"] for worker in weekend_eligible),
+            "availability_normalized_weekend_burden": distribution(worker["weekend_burden"] for worker in weekend_eligible),
+            "overtime_hours_active_workers": distribution(worker["overtime_hours"] for worker in active),
+            "overtime_recipients": len(overtime_recipients),
+            "overtime_selection_rate": round(safe_ratio(len(overtime_recipients), len(active)), 4),
+        }
+    return {
+        "attribute": attribute,
+        "minimum_group_size": minimum_group_size,
+        "groups": groups,
+        "interpretation": "Compare opportunity-normalized means and selection rates; small groups are descriptive only.",
+    }
+
+
+def evaluate(
+    rows: list[dict[str, str]],
+    vacations: dict[str, set[dt.date]],
+    attributes: dict[str, dict[str, str]] | None = None,
+    overtime: dict[str, int] | None = None,
+    additional_unavailable: dict[str, set[dt.date]] | None = None,
+) -> dict:
+    attributes = attributes or {}
+    overtime = overtime or {}
+    additional_unavailable = additional_unavailable or {}
     dates = [dt.date.fromisoformat(row["date"]) for row in rows]
     first = min(dates).replace(day=1)
     days = month_days(first)
@@ -77,23 +149,24 @@ def evaluate(rows: list[dict[str, str]], vacations: dict[str, set[dt.date]]) -> 
     workers = []
     for p, name in enumerate(PEOPLE):
         entries = assigned[name]
+        unavailable = vacations.get(name, set()) | additional_unavailable.get(name, set())
         available_days = sum(
-            day not in vacations.get(name, set()) and any(allowed(p, day, shift) for shift in SHIFTS)
+            day not in unavailable and any(allowed(p, day, shift) for shift in SHIFTS)
             for day in days
         )
         night_opportunities = sum(
-            day not in vacations.get(name, set()) and allowed(p, day, NIGHT)
+            day not in unavailable and allowed(p, day, NIGHT)
             for day in days
         )
         weekend_opportunities = len({
             weekend_id(day) for day in days
-            if day.weekday() >= 5 and day not in vacations.get(name, set())
+            if day.weekday() >= 5 and day not in unavailable
             and any(allowed(p, day, shift) for shift in SHIFTS)
         })
         nights = sum(code == "N" for _, code in entries)
         worked_weekends = len({weekend_id(day) for day, _ in entries if day.weekday() >= 5})
         shifts = len(entries)
-        workers.append({
+        worker = {
             "person": name,
             "assigned_shifts": shifts,
             "assigned_hours": shifts * 8,
@@ -107,33 +180,42 @@ def evaluate(rows: list[dict[str, str]], vacations: dict[str, set[dt.date]]) -> 
             "workload_ratio": round(safe_ratio(shifts, available_days), 4),
             "night_burden": round(safe_ratio(nights, night_opportunities), 4),
             "weekend_burden": round(safe_ratio(worked_weekends, weekend_opportunities), 4),
-        })
+            "overtime_hours": overtime.get(name, 0),
+        }
+        worker.update(attributes.get(name, {}))
+        workers.append(worker)
 
     night_eligible = [worker for worker in workers if worker["night_opportunities"]]
     weekend_eligible = [worker for worker in workers if worker["weekend_opportunities"]]
+    workload_eligible = [worker for worker in workers if worker["available_days"]]
     metrics = {
-        "assigned_hours": distribution(worker["assigned_hours"] for worker in workers),
-        "availability_normalized_workload": distribution(worker["workload_ratio"] for worker in workers),
+        "assigned_hours": distribution(worker["assigned_hours"] for worker in workload_eligible),
+        "availability_normalized_workload": distribution(worker["workload_ratio"] for worker in workload_eligible),
         "night_shifts_eligible_workers": distribution(worker["night_shifts"] for worker in night_eligible),
         "availability_normalized_night_burden": distribution(worker["night_burden"] for worker in night_eligible),
         "weekends_eligible_workers": distribution(worker["weekends_worked"] for worker in weekend_eligible),
         "availability_normalized_weekend_burden": distribution(worker["weekend_burden"] for worker in weekend_eligible),
     }
-    return {
+    report = {
         "period": {"year": first.year, "month": first.month, "days": len(days)},
         "population": {
             "workers": len(workers),
+            "assigned_hours_workers": len(workload_eligible),
+            "workload_eligible_workers": len(workload_eligible),
             "night_eligible_workers": len(night_eligible),
             "weekend_eligible_workers": len(weekend_eligible),
         },
         "interpretation": {
             "gini": "0 is perfectly equal; larger values indicate greater inequality.",
             "jain_index": "1 is perfectly equal; smaller values indicate greater inequality.",
-            "normalized_burdens": "Assignments divided by opportunities; comparisons exclude ineligible workers.",
+            "normalized_burdens": "Assignments divided by opportunities; comparisons exclude workers with no relevant opportunity.",
         },
         "metrics": metrics,
         "workers": workers,
     }
+    if any(worker.get("sex") for worker in workers):
+        report["group_equity"] = {"sex": group_equity(workers, "sex")}
+    return report
 
 
 def write_worker_csv(report: dict, path: Path) -> None:
@@ -157,7 +239,13 @@ def render_fairness(report: dict, path: Path) -> None:
     fig, axes = plt.subplots(2, 2, figsize=(16, 10), constrained_layout=True)
 
     axes[0, 0].bar(x, [worker["assigned_hours"] for worker in workers], color="#4472C4")
-    axes[0, 0].axhline(fmean(worker["assigned_hours"] for worker in workers), color="#C00000", linestyle="--", label="Mean")
+    workload_workers = [worker for worker in workers if worker["available_days"]]
+    axes[0, 0].axhline(
+        fmean(worker["assigned_hours"] for worker in workload_workers),
+        color="#C00000",
+        linestyle="--",
+        label="Mean (workers with opportunity)",
+    )
     axes[0, 0].set_title("Assigned workload")
     axes[0, 0].set_ylabel("Hours")
     axes[0, 0].legend()
@@ -203,8 +291,18 @@ def main() -> None:
     parser.add_argument("--json", type=Path, default=Path("reports/fairness_report.json"))
     parser.add_argument("--csv", type=Path, default=Path("reports/fairness_workers.csv"))
     parser.add_argument("--chart", type=Path, default=Path("reports/fairness_dashboard.png"))
+    parser.add_argument("--attributes", type=Path, help="JSON mapping worker names to explicit attributes")
+    parser.add_argument("--solver-report", type=Path, help="Solver report containing monthly_overtime_used")
+    parser.add_argument("--hemodinamica-schedule", type=Path,
+                        help="Linked schedule whose Lina assignments are unavailable Imaging days")
     args = parser.parse_args()
-    report = evaluate(read_schedule(args.schedule), load_vacations(args.config, args.department))
+    report = evaluate(
+        read_schedule(args.schedule),
+        load_vacations(args.config, args.department),
+        load_worker_attributes(args.attributes),
+        load_overtime(args.solver_report),
+        linked_schedule_unavailability(args.hemodinamica_schedule),
+    )
     args.json.parent.mkdir(parents=True, exist_ok=True)
     args.json.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     write_worker_csv(report, args.csv)

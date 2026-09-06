@@ -10,8 +10,18 @@ from collections import Counter
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
-from evaluate import evaluate, load_vacations, read_schedule
-from solver import AFTERNOON, MORNING, NIGHT, Weights, solve_and_export
+from evaluate import evaluate, linked_schedule_unavailability, load_vacations, read_schedule
+from solver import AFTERNOON, MORNING, NIGHT, SHIFTS, SHIFT_DUR, Weights, solve_and_export
+
+
+def shared_worker_context(path: Path | None, worker: str = "Lina") -> tuple[set[tuple[str, dt.date, int]], dict[str, int]]:
+    """Convert a linked-unit roster into blocked Imaging dates and worked hours."""
+    if path is None:
+        return set(), {}
+    rows = read_schedule(path)
+    days = {dt.date.fromisoformat(row["date"]) for row in rows if row["person"] == worker}
+    return ({(worker, day, shift) for day in days for shift in SHIFTS},
+            {worker: SHIFT_DUR * len(days)})
 
 
 @dataclass(frozen=True)
@@ -184,12 +194,15 @@ def run_robustness(
     holidays: Path | None = None,
     forbidden_assignments: set[tuple[str, dt.date, int]] | None = None,
     extra_rest_hours: dict[str, int] | None = None,
+    additional_unavailable: dict[str, set[dt.date]] | None = None,
 ) -> list[dict]:
     baseline_rows = read_schedule(baseline_path)
     baseline_dates = [dt.date.fromisoformat(row["date"]) for row in baseline_rows]
     year, month = min(baseline_dates).year, min(baseline_dates).month
     baseline_vacations = load_vacations(config_path, department)
-    baseline_fairness = fairness_snapshot(evaluate(baseline_rows, baseline_vacations))
+    baseline_fairness = fairness_snapshot(evaluate(
+        baseline_rows, baseline_vacations, additional_unavailable=additional_unavailable
+    ))
     reference = solver_reference(baseline_rows)
     output.mkdir(parents=True, exist_ok=True)
     results = []
@@ -222,7 +235,9 @@ def run_robustness(
                 extra_rest_hours=extra_rest_hours,
             )
             repaired = read_schedule(directory / "schedule.csv")
-            repaired_report = evaluate(repaired, adjusted_vacations)
+            repaired_report = evaluate(
+                repaired, adjusted_vacations, additional_unavailable=additional_unavailable
+            )
             repaired_fairness = fairness_snapshot(repaired_report)
             changes = compare_schedules(baseline_rows, repaired)
             row.update({
@@ -279,10 +294,16 @@ def main() -> None:
     parser.add_argument("--contracts", type=Path)
     parser.add_argument("--workday-history", type=Path)
     parser.add_argument("--holidays", type=Path)
+    parser.add_argument("--hemodinamica-schedule", type=Path,
+                        help="Linked-unit schedule used to block Lina and count her shared hours")
     args = parser.parse_args()
+    forbidden, extra_hours = shared_worker_context(args.hemodinamica_schedule)
+    additional_unavailable = linked_schedule_unavailability(args.hemodinamica_schedule)
     results = run_robustness(
         args.baseline, args.rest, args.config, args.department, args.output, args.time_limit, args.seed,
         contract_hours=args.contracts, workday_history=args.workday_history, holidays=args.holidays,
+        forbidden_assignments=forbidden, extra_rest_hours=extra_hours,
+        additional_unavailable=additional_unavailable,
     )
     print(json.dumps(results, indent=2))
 

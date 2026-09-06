@@ -9,8 +9,18 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from evaluate import evaluate, load_vacations, read_schedule, write_worker_csv
-from solver import Weights, solve_and_export
+from evaluate import evaluate, linked_schedule_unavailability, load_vacations, read_schedule, write_worker_csv
+from solver import SHIFTS, SHIFT_DUR, Weights, solve_and_export
+
+
+def shared_worker_context(path: Path | None, worker: str = "Lina") -> tuple[set[tuple[str, dt.date, int]], dict[str, int]]:
+    """Convert a linked-unit roster into blocked Imaging dates and worked hours."""
+    if path is None:
+        return set(), {}
+    rows = read_schedule(path)
+    days = {dt.date.fromisoformat(row["date"]) for row in rows if row["person"] == worker}
+    return ({(worker, day, shift) for day in days for shift in SHIFTS},
+            {worker: SHIFT_DUR * len(days)})
 
 
 PROFILES: dict[str, Weights] = {
@@ -71,13 +81,12 @@ PROFILES: dict[str, Weights] = {
         vacation_adjacent_weekend=100,
         schedule_changes=0,
     ),
-    "balanced": Weights(),
 }
 
 
 def preference_cost(components: dict[str, int]) -> int:
-    """Unweighted count of preference violations, excluding scaled workload."""
-    return sum(value for name, value in components.items() if name != "workload_imbalance")
+    """Unitless unweighted aggregate of all raw soft-penalty components."""
+    return sum(components.values())
 
 
 def flatten_result(name: str, solver_report: dict, fairness_report: dict) -> dict:
@@ -93,6 +102,7 @@ def flatten_result(name: str, solver_report: dict, fairness_report: dict) -> dic
         "normalized_workload_gini": metrics["availability_normalized_workload"]["gini"],
         "normalized_workload_jain": metrics["availability_normalized_workload"]["jain_index"],
         "night_gini": metrics["availability_normalized_night_burden"]["gini"],
+        "night_jain": metrics["availability_normalized_night_burden"]["jain_index"],
         "weekend_gini": metrics["availability_normalized_weekend_burden"]["gini"],
         "weekend_jain": metrics["availability_normalized_weekend_burden"]["jain_index"],
         "preference_cost": preference_cost(components),
@@ -140,7 +150,7 @@ def render_comparison(rows: list[dict], output_dir: Path) -> None:
         axis.annotate("\n".join(names), (weekend_gini, cost),
                       xytext=(7, 5), textcoords="offset points", fontsize=9)
     axis.set_xlabel("Availability-normalized weekend Gini (lower is fairer)")
-    axis.set_ylabel("Unweighted soft-preference violations (lower is better)")
+    axis.set_ylabel("Unweighted aggregate preference cost (no unit; lower is better)")
     axis.set_title("Weekend fairness vs. preference satisfaction")
     axis.grid(alpha=0.3)
     fig.tight_layout()
@@ -162,6 +172,9 @@ def run_experiments(
     holidays: Path | None = None,
     forbidden_assignments: set[tuple[str, dt.date, int]] | None = None,
     extra_rest_hours: dict[str, int] | None = None,
+    additional_unavailable: dict[str, set[dt.date]] | None = None,
+    published_schedule: Path | None = None,
+    published_report: Path | None = None,
 ) -> list[dict]:
     output_dir.mkdir(parents=True, exist_ok=True)
     vacations = load_vacations(config_path, department)
@@ -179,14 +192,29 @@ def run_experiments(
             forbidden_assignments=forbidden_assignments,
             extra_rest_hours=extra_rest_hours,
         )
-        fairness_report = evaluate(read_schedule(schedule_path), vacations)
+        fairness_report = evaluate(
+            read_schedule(schedule_path), vacations, additional_unavailable=additional_unavailable
+        )
         (profile_dir / "solver_report.json").write_text(json.dumps(solver_report, indent=2) + "\n", encoding="utf-8")
         (profile_dir / "fairness_report.json").write_text(json.dumps(fairness_report, indent=2) + "\n", encoding="utf-8")
         write_worker_csv(fairness_report, profile_dir / "fairness_workers.csv")
         comparison.append(flatten_result(name, solver_report, fairness_report))
+    if published_schedule is not None and published_report is not None:
+        solver_report = json.loads(published_report.read_text(encoding="utf-8"))
+        fairness_report = evaluate(
+            read_schedule(published_schedule), vacations, additional_unavailable=additional_unavailable
+        )
+        comparison.append(flatten_result("published_schedule", solver_report, fairness_report))
     write_comparison(comparison, output_dir / "comparison.csv")
     (output_dir / "profiles.json").write_text(
-        json.dumps({name: asdict(weights) for name, weights in PROFILES.items()}, indent=2) + "\n",
+        json.dumps({
+            **{name: asdict(weights) for name, weights in PROFILES.items()},
+            "published_schedule": {
+                "weights": asdict(Weights()),
+                "source_schedule": str(published_schedule) if published_schedule else None,
+                "source_report": str(published_report) if published_report else None,
+            },
+        }, indent=2) + "\n",
         encoding="utf-8",
     )
     render_comparison(comparison, output_dir)
@@ -206,10 +234,21 @@ def main() -> None:
     parser.add_argument("--contracts", type=Path)
     parser.add_argument("--workday-history", type=Path)
     parser.add_argument("--holidays", type=Path)
+    parser.add_argument("--hemodinamica-schedule", type=Path,
+                        help="Linked-unit schedule used to block Lina and count her shared hours")
+    parser.add_argument("--published-schedule", type=Path,
+                        help="Main published schedule to use as the balanced reference")
+    parser.add_argument("--published-report", type=Path,
+                        help="Solver report belonging to --published-schedule")
     args = parser.parse_args()
+    forbidden, extra_hours = shared_worker_context(args.hemodinamica_schedule)
+    additional_unavailable = linked_schedule_unavailability(args.hemodinamica_schedule)
     results = run_experiments(
         args.year, args.month, args.rest, args.config, args.department, args.output, args.time_limit, args.seed,
         contract_hours=args.contracts, workday_history=args.workday_history, holidays=args.holidays,
+        forbidden_assignments=forbidden, extra_rest_hours=extra_hours,
+        additional_unavailable=additional_unavailable,
+        published_schedule=args.published_schedule, published_report=args.published_report,
     )
     print(json.dumps(results, indent=2))
 

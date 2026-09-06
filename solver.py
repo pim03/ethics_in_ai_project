@@ -99,7 +99,7 @@ HARD_CONSTRAINTS = {
     "staffing_minimum": "Each shift meets its hard minimum staffing. Weekday mornings have a hard floor of six and a preferred target of ten (see morning_shortfall_key_day/other_day).",
     "availability": "Vacations and shift eligibility are respected.",
     "weekly_hours": "Assigned time does not exceed the weekly legal limit.",
-    "monthly_hours": "Monthly hours respect the target cap and carried rest debt, plus an optional 24-32 h fair-shared overtime allowance (see monthly_overtime).",
+    "monthly_hours": "Monthly hours respect the target cap and carried rest debt; any actual excess is either zero or 24-32 hours (see monthly_overtime).",
     "afternoon_rest": "A normal afternoon cannot be followed by a morning.",
     "early_afternoon_night": "An early afternoon cannot be followed by a night shift.",
     "night_rest": "A night shift cannot be followed by work the next day.",
@@ -237,6 +237,7 @@ def build_model(
     demand_adjustments: Optional[dict[tuple[dt.date, int], int]] = None,
     reference_assignments: Optional[set[tuple[str, dt.date, str]]] = None,
     forbidden_assignments: Optional[set[tuple[str, dt.date, int]]] = None,
+    minimum_staffing_overrides: Optional[dict[tuple[dt.date, int], int]] = None,
     contract_hours: Optional[dict[str, int]] = None,
     workday_history: Optional[dict[str, int]] = None,
     holiday_dates: Optional[dict[dt.date, str]] = None,
@@ -249,6 +250,7 @@ def build_model(
     model = cp_model.CpModel()
     demand_adjustments = demand_adjustments or {}
     forbidden_assignments = forbidden_assignments or set()
+    minimum_staffing_overrides = minimum_staffing_overrides or {}
     contract_hours = contract_hours or {name: 35 for name in PEOPLE}
     workday_history = workday_history or {name: 0 for name in PEOPLE}
     holiday_dates = holiday_dates or {}
@@ -263,13 +265,8 @@ def build_model(
         if not on_vacation(p, day)
         for s in SHIFTS
         if allowed(p, day, s)
+        and (PEOPLE[p], day, s) not in forbidden_assignments
     }
-
-    for p, name in enumerate(PEOPLE):
-        for d, day in enumerate(days):
-            for s in SHIFTS:
-                if (name, day, s) in forbidden_assignments and (p, d, s) in x:
-                    model.Add(x[p, d, s] == 0)
 
     for p in range(len(PEOPLE)):
         for d in range(n_days):
@@ -287,6 +284,9 @@ def build_model(
             adjustment = demand_adjustments.get((day, s), 0)
             required = minimum_required(day, s, holiday_dates) + adjustment
             staffed = _sum(x[p, d, s] for p in range(len(PEOPLE)) if (p, d, s) in x)
+            forced_minimum = minimum_staffing_overrides.get((day, s))
+            if forced_minimum is not None:
+                model.Add(staffed >= forced_minimum)
             if s == MORNING and not _is_reduced_staffing_day(day, holiday_dates):
                 hard_floor = min(required, WEEKDAY_MORNING_HARD_MINIMUM + max(0, adjustment))
                 model.Add(staffed >= hard_floor)
@@ -446,7 +446,7 @@ def build_model(
 
     # Hospital feedback: when short-staffed, monthly overtime is shared fairly
     # rather than concentrated on a few people — anyone who works overtime
-    # that month does between 24 and 32 extra hours, never an arbitrary
+    # that month does between 24 and 32 actual excess hours, never an arbitrary
     # smaller or larger amount. Going further requires separately-authorized
     # overtime pay, which isn't modelled here.
     monthly_overtime: dict[int, cp_model.IntVar] = {}
@@ -459,6 +459,7 @@ def build_model(
         monthly_cap = (weekly_contract * n_days // 7 // SHIFT_DUR) * SHIFT_DUR
         base_cap = max(0, monthly_cap - rest_hours.get(name, 0))
         extra = model.NewIntVar(0, 32, f"monthly_overtime_{p}")
+        model.AddMaxEquality(extra, [0, SHIFT_DUR * assigned - base_cap])
         uses_overtime = model.NewBoolVar(f"uses_overtime_{p}")
         model.Add(extra == 0).OnlyEnforceIf(uses_overtime.Not())
         model.Add(extra >= 24).OnlyEnforceIf(uses_overtime)
@@ -1158,10 +1159,12 @@ def validate_schedule(
         weekly_contract = (contract_hours or {}).get(person, 35)
         cap = (weekly_contract * len(month_days(first_day)) // 7 // SHIFT_DUR) * SHIFT_DUR
         monthly = len(ordered) * SHIFT_DUR
-        # A fair-shared overtime allowance (see build_model's monthly_overtime)
-        # can add up to 32 h on top of the base cap.
-        if monthly > max(0, cap - (rest_hours or {}).get(person, 0)) + 32:
-            errors.append(f"{person} has {monthly} monthly hours above their adjusted cap plus overtime allowance")
+        base_cap = max(0, cap - (rest_hours or {}).get(person, 0))
+        excess = max(0, monthly - base_cap)
+        if excess and not 24 <= excess <= 32:
+            errors.append(
+                f"{person} has {excess} monthly overtime hours; an overtime recipient must have 24-32"
+            )
     return errors
 
 
@@ -1179,6 +1182,7 @@ def solve_and_export(
     demand_adjustments: Optional[dict[tuple[dt.date, int], int]] = None,
     reference_assignments: Optional[set[tuple[str, dt.date, str]]] = None,
     forbidden_assignments: Optional[set[tuple[str, dt.date, int]]] = None,
+    minimum_staffing_overrides: Optional[dict[tuple[dt.date, int], int]] = None,
     contract_hours_json: Optional[Path] = None,
     workday_history_json: Optional[Path] = None,
     holiday_json: Optional[Path] = None,
@@ -1213,6 +1217,7 @@ def solve_and_export(
         demand_adjustments=demand_adjustments,
         reference_assignments=reference_assignments,
         forbidden_assignments=forbidden_assignments,
+        minimum_staffing_overrides=minimum_staffing_overrides,
         contract_hours=contract_hours,
         workday_history=workday_history,
         holiday_dates=holiday_dates,
@@ -1400,7 +1405,7 @@ def solve_month(
     Hemodinamica goes first: its need for Lina is a hard, structural one (the
     department is unstaffable without her on the days Angelo/Nuno can't cover
     alone), while imaging can absorb losing her on a given day through its
-    existing flexibility (other workers, the monthly overtime allowance, the
+    existing flexibility (other workers, the bounded monthly overtime mechanism, the
     Tuesday/Thursday shortfall valve). Imaging then runs with those days
     forbidden for Lina, and her hemodinamica hours counted against the same
     shared monthly cap.
