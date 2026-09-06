@@ -1,0 +1,22 @@
+person,sex,total_shifts,night_shifts,night_shift_rate,weekend_shifts,weekend_shift_rate,holiday_shifts,holiday_shift_rate,worker_specific_constraint_satisfaction,eligible_night_opportunities,eligible_weekend_opportunities,eligible_holiday_opportunities,eligible_night_assignment_rate,eligible_weekend_assignment_rate,eligible_holiday_assignment_rate,overall_burden_score
+Celia L,F,17,0,0.0,0,0.0,0,,,0,6,0,,0.0,,0.0
+Telmo,M,21,2,0.0952,3,0.1429,0,,,26,6,0,0.0769,0.5,,0.119
+Anabela,F,13,2,0.1538,1,0.0769,0,,,17,4,0,0.1176,0.25,,0.1154
+Fernanda,F,20,0,0.0,1,0.05,0,,,0,6,0,,0.1667,,0.025
+Raquel B,F,13,2,0.1538,3,0.2308,0,,,17,4,0,0.1176,0.75,,0.1923
+Rosa R,F,21,2,0.0952,6,0.2857,0,,,30,8,0,0.0667,0.75,,0.1905
+Sandra,F,21,0,0.0,3,0.1429,0,,,0,6,0,,0.5,,0.0714
+Pedro,M,21,3,0.1429,6,0.2857,0,,,30,8,0,0.1,0.75,,0.2143
+Lina,F,8,2,0.25,4,0.5,0,,,12,6,0,0.1667,0.6667,,0.375
+Hugo,M,21,3,0.1429,5,0.2381,0,,,25,6,0,0.12,0.8333,,0.1905
+Celso,M,17,0,0.0,0,0.0,0,,,0,0,0,,,,0.0
+Richard,M,21,2,0.0952,5,0.2381,0,,,30,8,0,0.0667,0.625,,0.1667
+Leonardo,M,21,3,0.1429,4,0.1905,0,,,30,8,0,0.1,0.5,,0.1667
+Raquel M,F,21,3,0.1429,6,0.2857,0,,,30,8,0,0.1,0.75,,0.2143
+Cátia,F,0,0,,0,,0,,,0,0,0,,,,
+Ana Catarina,F,21,2,0.0952,5,0.2381,0,,,30,8,0,0.0667,0.625,,0.1667
+Ana Margarida,F,12,2,0.1667,2,0.1667,0,,,14,2,0,0.1429,1.0,,0.1667
+Diogo João,M,12,2,0.1667,0,0.0,0,,,14,2,0,0.1429,0.0,,0.0833
+Ana Martins,F,21,0,0.0,2,0.0952,0,,,0,8,0,,0.25,,0.0476
+Ana Sofia,F,0,0,,0,,0,,,0,0,0,,,,
+Cristina,F,18,0,0.0,0,0.0,0,,,0,6,0,,0.0,,0.0

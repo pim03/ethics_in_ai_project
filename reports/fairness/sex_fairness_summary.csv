@@ -1,0 +1,9 @@
+metric,female_workers,male_workers,female_total_shifts,male_total_shifts,female_undesirable_assignments,male_undesirable_assignments,female,male,signed_difference_f_minus_m,absolute_gap,burden_ratio_f_over_m,greater_burden_group
+night_shift_rate,14,7,206,134,15,15,0.0881,0.1123,-0.0242,0.0242,0.7845,M
+weekend_shift_rate,14,7,206,134,33,23,0.1727,0.1565,0.0162,0.0162,1.1035,F
+holiday_shift_rate,14,7,206,134,0,0,,,,,,
+worker_specific_constraint_satisfaction,14,7,206,134,,,,,,,,
+eligible_night_assignment_rate,14,7,206,134,15,15,0.1112,0.1011,0.0101,0.0101,1.0999,F
+eligible_weekend_assignment_rate,14,7,206,134,33,23,0.4757,0.5347,-0.059,0.059,0.8897,M
+eligible_holiday_assignment_rate,14,7,206,134,0,0,,,,,,
+overall_burden_score,14,7,206,134,,,0.1304,0.1344,-0.004,0.004,0.9702,M
