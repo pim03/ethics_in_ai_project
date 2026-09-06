@@ -38,7 +38,7 @@ reports/report_visualizations/
 experiments/2026-09/        Objective-profile schedules and comparisons
 robustness/2026-09/         Disruption scenarios and repaired schedules
 final_report/               Final report source and PDF
-proposal/                   Original proposal and constraint documentation
+proposal/                   Original project proposal source and PDF
 ```
 
 The CSV and JSON files are the machine-readable evidence behind the figures and conclusions in the final report.
