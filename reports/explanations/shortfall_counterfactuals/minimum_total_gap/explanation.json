@@ -1,0 +1,54 @@
+{
+  "solver_status": "OPTIMAL",
+  "baseline_total_gap": 24,
+  "minimum_total_gap": 17,
+  "minimum_gap_days": [
+    {
+      "date": "2026-09-02",
+      "weekday": "Wednesday",
+      "short_by": 1
+    },
+    {
+      "date": "2026-09-03",
+      "weekday": "Thursday",
+      "short_by": 1
+    },
+    {
+      "date": "2026-09-07",
+      "weekday": "Monday",
+      "short_by": 1
+    },
+    {
+      "date": "2026-09-08",
+      "weekday": "Tuesday",
+      "short_by": 2
+    },
+    {
+      "date": "2026-09-09",
+      "weekday": "Wednesday",
+      "short_by": 2
+    },
+    {
+      "date": "2026-09-10",
+      "weekday": "Thursday",
+      "short_by": 2
+    },
+    {
+      "date": "2026-09-11",
+      "weekday": "Friday",
+      "short_by": 3
+    },
+    {
+      "date": "2026-09-15",
+      "weekday": "Tuesday",
+      "short_by": 3
+    },
+    {
+      "date": "2026-09-18",
+      "weekday": "Friday",
+      "short_by": 2
+    }
+  ],
+  "overtime_hours_in_minimum_gap_schedule": 384,
+  "conclusion": "The published schedule has a total gap of 24 worker-slots. When the solver ignores all other preferences and minimizes only this gap, the proven minimum is 17. The schedule returned by that diagnostic uses 384 overtime hours, but this is not a proven minimum overtime requirement because the diagnostic does not minimize overtime. Therefore, some gap is unavoidable under the encoded hard constraints, while part of the published gap comes from trading staffing against overtime and other schedule goals."
+}

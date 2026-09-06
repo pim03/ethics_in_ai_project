@@ -1,0 +1,67 @@
+{
+  "question": "What changes if Leonardo cannot work night on 2026-09-10?",
+  "target": {
+    "date": "2026-09-10",
+    "weekday": "Thursday",
+    "person": "Leonardo",
+    "shift": "N",
+    "start_hour": "0",
+    "end_hour": "8"
+  },
+  "feasible": true,
+  "solver_status": "OPTIMAL",
+  "assignment_edits": 4,
+  "replacement_equivalents": 2,
+  "affected_workers": 2,
+  "removed_assignments": [
+    [
+      "Leonardo",
+      "2026-09-10",
+      "N"
+    ],
+    [
+      "Richard",
+      "2026-09-11",
+      "M"
+    ]
+  ],
+  "added_assignments": [
+    [
+      "Leonardo",
+      "2026-09-11",
+      "M"
+    ],
+    [
+      "Richard",
+      "2026-09-10",
+      "N"
+    ]
+  ],
+  "fairness_changes": {
+    "availability_normalized_workload": 0.0,
+    "availability_normalized_night_burden": 0.0,
+    "availability_normalized_weekend_burden": 0.0
+  },
+  "objective_comparison": {
+    "baseline_score": 23227000,
+    "alternative_score": 23228550,
+    "score_change": 1550,
+    "interpretation": "worsened",
+    "component_changes": {
+      "isolated_rest_day": {
+        "raw_change": 4,
+        "weighted_change": 800
+      },
+      "isolated_work_day": {
+        "raw_change": 2,
+        "weighted_change": 600
+      },
+      "night_ramp_mismatch": {
+        "raw_change": 1,
+        "weighted_change": 150
+      }
+    },
+    "note": "Both scores use the published schedule's weights; the repair-only schedule-change penalty is excluded."
+  },
+  "explanation": "Forbidding the assignment remains feasible and requires 4 exact assignment edits affecting 2 workers. The listed changes are solver-verified counterfactual consequences."
+}

@@ -1,0 +1,101 @@
+{
+  "date": "2026-09-09",
+  "weekday": "Wednesday",
+  "mandatory_minimum": 6,
+  "preferred_target": 10,
+  "scheduled": 9,
+  "gap_to_preferred_target": 1,
+  "mandatory_minimum_met": true,
+  "visible_reason_counts": {
+    "one_shift_per_day": 4,
+    "availability": 6,
+    "afternoon_rest": 2,
+    "weekly_hours": 2,
+    "night_recovery": 1
+  },
+  "workers_not_on_morning": [
+    {
+      "person": "Telmo",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Anabela",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Raquel B",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Rosa R",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Hugo",
+      "visible_reasons": [
+        "one_shift_per_day",
+        "afternoon_rest"
+      ]
+    },
+    {
+      "person": "Richard",
+      "visible_reasons": [
+        "afternoon_rest",
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Raquel M",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "C\u00e1tia",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Catarina",
+      "visible_reasons": [
+        "night_recovery",
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Ana Margarida",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Diogo Jo\u00e3o",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Sofia",
+      "visible_reasons": [
+        "availability"
+      ]
+    }
+  ],
+  "counterfactual_test": {
+    "result": "preferred_target_feasible",
+    "solver_status": "OPTIMAL",
+    "assignment_edits": 4,
+    "replacement_equivalents": 2,
+    "affected_workers": 2
+  },
+  "conclusion": "A valid alternative with 10 morning workers was found. The original gap was therefore not required by the hard constraints."
+}

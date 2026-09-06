@@ -1,0 +1,118 @@
+{
+  "date": "2026-09-15",
+  "weekday": "Tuesday",
+  "mandatory_minimum": 6,
+  "preferred_target": 10,
+  "scheduled": 6,
+  "gap_to_preferred_target": 4,
+  "mandatory_minimum_met": true,
+  "visible_reason_counts": {
+    "one_shift_per_day": 4,
+    "weekly_hours": 5,
+    "night_recovery": 1,
+    "availability": 5,
+    "afternoon_rest": 2
+  },
+  "workers_not_on_morning": [
+    {
+      "person": "Telmo",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Anabela",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Raquel B",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Rosa R",
+      "visible_reasons": [
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Pedro",
+      "visible_reasons": [
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Lina",
+      "visible_reasons": [
+        "night_recovery"
+      ]
+    },
+    {
+      "person": "Hugo",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Richard",
+      "visible_reasons": [
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Leonardo",
+      "visible_reasons": [
+        "one_shift_per_day",
+        "afternoon_rest"
+      ]
+    },
+    {
+      "person": "Raquel M",
+      "visible_reasons": [
+        "afternoon_rest",
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "C\u00e1tia",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Catarina",
+      "visible_reasons": [
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "Ana Margarida",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Diogo Jo\u00e3o",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Sofia",
+      "visible_reasons": [
+        "availability"
+      ]
+    }
+  ],
+  "counterfactual_test": {
+    "result": "preferred_target_feasible",
+    "solver_status": "OPTIMAL",
+    "assignment_edits": 11,
+    "replacement_equivalents": 6,
+    "affected_workers": 5
+  },
+  "conclusion": "A valid alternative with 10 morning workers was found. The original gap was therefore not required by the hard constraints."
+}

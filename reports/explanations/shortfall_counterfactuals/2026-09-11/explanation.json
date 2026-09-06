@@ -1,0 +1,99 @@
+{
+  "date": "2026-09-11",
+  "weekday": "Friday",
+  "mandatory_minimum": 6,
+  "preferred_target": 10,
+  "scheduled": 9,
+  "gap_to_preferred_target": 1,
+  "mandatory_minimum_met": true,
+  "visible_reason_counts": {
+    "availability": 6,
+    "one_shift_per_day": 4,
+    "afternoon_rest": 2,
+    "global_optimization": 1,
+    "night_recovery": 1,
+    "weekly_hours": 1
+  },
+  "workers_not_on_morning": [
+    {
+      "person": "Anabela",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Fernanda",
+      "visible_reasons": [
+        "one_shift_per_day",
+        "afternoon_rest"
+      ]
+    },
+    {
+      "person": "Raquel B",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Sandra",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Pedro",
+      "visible_reasons": [
+        "one_shift_per_day",
+        "afternoon_rest"
+      ]
+    },
+    {
+      "person": "Lina",
+      "visible_reasons": [
+        "global_optimization"
+      ]
+    },
+    {
+      "person": "Hugo",
+      "visible_reasons": [
+        "one_shift_per_day"
+      ]
+    },
+    {
+      "person": "Leonardo",
+      "visible_reasons": [
+        "night_recovery",
+        "weekly_hours"
+      ]
+    },
+    {
+      "person": "C\u00e1tia",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Margarida",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Diogo Jo\u00e3o",
+      "visible_reasons": [
+        "availability"
+      ]
+    },
+    {
+      "person": "Ana Sofia",
+      "visible_reasons": [
+        "availability"
+      ]
+    }
+  ],
+  "counterfactual_test": {
+    "result": "proven_infeasible",
+    "error": "No feasible schedule: INFEASIBLE"
+  },
+  "conclusion": "The solver proved that 10 morning workers are impossible under the encoded constraints."
+}

@@ -1,0 +1,6 @@
+technique,questions_evaluated,specific_answers,specific_answer_rate,runtime_seconds,verification_basis,main_strength,main_limitation
+factual_rule_trace,340,340,1.0,0.0036,Facts recomputed from the published schedule and declared rules,"Fast, complete coverage of assigned shifts",Legality and relevance are not a unique causal explanation
+contrastive_why_not,2158,2015,0.9337,0.0086,Direct hard exclusions observable in the published schedule,"Identifies actionable availability, eligibility, rest, and hour exclusions",Falls back to global optimization when no direct exclusion is visible
+capacity_diagnostic,90,90,1.0,0.0003,Static availability and shift-eligibility counts versus required coverage,Makes staffing pressure visible; 0 static conflicts detected,Not a complete dynamic feasibility proof or unsatisfiable core
+repair_explanation,6,6,1.0,0.0027,Exact difference between baseline and solver-generated repaired schedules,Connects an operational trigger to concrete schedule changes,"Explains the repair outcome, not every optimization trade-off within it"
+counterfactual_resolve,1,1,1.0,0.2745,CP-SAT re-solve after forbidding the selected assignment,Strongest evidence about feasibility and downstream consequences,"Slower and conditional on model, weights, seed, and time limit"
